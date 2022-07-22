@@ -108,6 +108,9 @@ class Kiwoom(QAxWidget):
     def SetRealReg(self, screen_no, code_list, fid_list, real_type):
         self.dynamicCall("SetRealReg(QString, QString, QString, QString)", 
                               screen_no, code_list, fid_list, real_type)
+        
+        
+        
 
 ####
     #실시간 조회관련 핸들
@@ -220,11 +223,23 @@ class Kiwoom(QAxWidget):
         return ret
 
     def _receive_chejan_data(self, gubun, item_cnt, fid_list):
+        
+        list_1 = [k for k in self.dic.keys() if str(self.get_chejan_data(302)) in k ]
+        
+        print('-----------------------')
+        print(list_1)
+        
+        self.dic[list_1[5]] = str(self.get_chejan_data(904))
+        
+        
         print(gubun)
+        self.ui.plainTextEdit.appendPlainText("주문번호 :"+ str(self.get_chejan_data(9203)) + " 종목명:" + str(self.get_chejan_data(302)) + " 매수수량 : " + str(self.get_chejan_data(900)) + "종목가격:" + str(self.get_chejan_data(901)) + "미체결수량 : " + str(self.get_chejan_data(902)))
         print(self.get_chejan_data(9203))
         print(self.get_chejan_data(302))
         print(self.get_chejan_data(900))
         print(self.get_chejan_data(901))
+        
+        self.ui.plainTextEdit.appendPlainText("원주문번호 :"+ str(self.get_chejan_data(904)))
 
     #받은 tr데이터가 무엇인지, 연속조회 할수있는지
     def _receive_tr_data(self, screen_no, rqname, trcode, record_name, next, unused1, unused2, unused3, unused4):
@@ -363,7 +378,7 @@ class Kiwoom(QAxWidget):
         initial = self.dic[list_1[2]]
         buy_count = self.dic[list_1[3]]
         sell_price = self.dic[list_1[4]] 
-        rebuy_count = self.dic[list_1[5]] 
+        #rebuy_count = self.dic[list_1[5]] 
         start_price = self.dic[list_1[6]]
         high = self.dic[list_1[7]]
         middle = self.dic[list_1[8]]
@@ -419,9 +434,10 @@ class Kiwoom(QAxWidget):
         #매수 상태
         elif status == "매수상태":
             #현재가가 하단선의 1%밑으로 내려가면 강제 청산 
-                self.send_order('send_order', "0101", self.ui.account_number, 3, trcode, 10,  61700,"00", "1" ) #지정가
+                self.send_order('send_order', "0101", self.ui.account_number, 3, trcode, 10,  61700,"00", "169659") #지정가
                 
                 
+                self.ui.plainTextEdit.appendPlainText("원주문번호 " + str(self.get_chejan_data(9203)))
 
 #재매수 고치기 (수량 얼마나 살지?)      
                 
