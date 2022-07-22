@@ -382,10 +382,13 @@ class Kiwoom(QAxWidget):
         if status == "초기상태":
             #시가가 중하중단선, 하단선 사이에 있으면 매수
             if start_price <= middle_low and start_price >= low :
-                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
+                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 10,  51600 ,"00", "" ) #지정가
                 self.dic[list_1[0]] = "매수상태"
                 self.dic[list_1[2]] = price
                 self.dic[list_1[3]] = buy_number
+                
+                
+                self.send_order('send_order', "0101", self.ui.account_number, 5, trcode, 10,  61700 ,"00", "" ) #지정가
                 
                 self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
 
@@ -416,17 +419,7 @@ class Kiwoom(QAxWidget):
         #매수 상태
         elif status == "매수상태":
             #현재가가 하단선의 1%밑으로 내려가면 강제 청산 
-            if price < low * 0.99 :
-                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
-                self.dic[list_1[0]] = "재매수대기상태"
-                self.dic[list_1[4]] = price * buy_count
-                self.ui.plainTextEdit.appendPlainText("하단가 1% 미만 지점 이탈 | 매도 :" + name)
-            
-            #보유중일때 현재가가 익절기준을 넘으면 매도   
-            elif price >= initial + (initial * self.ui.take_profit/100):
-                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
-                self.ui.plainTextEdit.appendPlainText("익절 퍼센트 초과 | 매도 :" + name)
-                self.dic[list_1[0]] = "익절매도"
+                self.send_order('send_order', "0101", self.ui.account_number, 3, trcode, 10,  61700,"00", "1" ) #지정가
                 
                 
 
