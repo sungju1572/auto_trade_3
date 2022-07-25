@@ -393,16 +393,49 @@ class Kiwoom(QAxWidget):
         #초기상태
         if status == "초기상태":
             #현재가가 각 라인에 도달하면 매수
-            if start_price <= middle_low and start_price >= low :
-                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 10,  71600 ,"00", "" ) #지정가
-                self.dic[list_1[0]] = "매수상태"
-                self.dic[list_1[2]] = price
-                self.dic[list_1[3]] = buy_number
+            #하단선 밑일 때 하단선 돌파시 매수
+            if price <= low :
+                if price == low :
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태"
+                    self.dic[list_1[2]] = price
+                    self.dic[list_1[3]] = buy_number
+                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑 | 종목 :" + name + " | 현재가 :" + str(price))
+
+            #현재가 중단선, 하단선 사이일 때 중단선 돌파시 매수
+            elif  price > low and price <= middle :
+                if price == middle:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태"
+                    self.dic[list_1[2]] = price
+                    self.dic[list_1[3]] = buy_number
+                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 & 중단선 사이 | 종목 :" + name + " | 현재가 :" + str(price))
+
+
+            #현재가 상단선, 중단선 사이일 때 상단선 돌파시 매수
+            elif  price > middle and price <= high :
+                if price == high:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태"
+                    self.dic[list_1[2]] = price
+                    self.dic[list_1[3]] = buy_number
+                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이 | 종목 :" + name + " | 현재가 :" + str(price))
+            
+            #현재가 상단선 위일 경우 대기
+            elif  price > high :
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위 | 종목 :" + name + " | 현재가 :" + str(price))
+            
+                    
                 
-                
-                self.send_order('send_order', "0101", self.ui.account_number, 5, trcode, 10,  61700 ,"00", "" ) #지정가
-                
-                self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
 
                 
             #시가가 두개 사이에 있지 않다가, 현재가가 하단선을 뚫고 올라오면 매수
