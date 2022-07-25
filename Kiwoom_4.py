@@ -224,16 +224,13 @@ class Kiwoom(QAxWidget):
 
     def _receive_chejan_data(self, gubun, item_cnt, fid_list):
         
-        list_1 = [k for k in self.dic.keys() if str(self.get_chejan_data(302)) in k ]
+        name = str(self.get_chejan_data(302)).strip()
         
-        print('-----------------------')
-        print(list_1)
-        
-        self.dic[list_1[5]] = str(self.get_chejan_data(904))
+        list_1 = [k for k in self.dic.keys() if name in k ]
         
         
         print(gubun)
-        self.ui.plainTextEdit.appendPlainText("주문번호 :"+ str(self.get_chejan_data(9203)) + " 종목명:" + str(self.get_chejan_data(302)) + " 매수수량 : " + str(self.get_chejan_data(900)) + "종목가격:" + str(self.get_chejan_data(901)) + "미체결수량 : " + str(self.get_chejan_data(902)))
+        self.ui.plainTextEdit.appendPlainText("주문번호 :"+ str(self.get_chejan_data(9203)) + " 종목명:" + name + " 매수수량 : " + str(self.get_chejan_data(900)) + "종목가격:" + str(self.get_chejan_data(901)) + "미체결수량 : " + str(self.get_chejan_data(902)))
         print(self.get_chejan_data(9203))
         print(self.get_chejan_data(302))
         print(self.get_chejan_data(900))
@@ -373,20 +370,20 @@ class Kiwoom(QAxWidget):
         list_1 = [k for k in self.dic.keys() if name in k ]
         
         
-        status = self.dic[list_1[0]]
-        rebuy = self.dic[list_1[1]]
-        initial = self.dic[list_1[2]]
-        buy_count = self.dic[list_1[3]]
-        sell_price = self.dic[list_1[4]] 
-        #rebuy_count = self.dic[list_1[5]] 
-        start_price = self.dic[list_1[6]]
-        high = self.dic[list_1[7]]
-        middle = self.dic[list_1[8]]
-        low = self.dic[list_1[9]]
-        price = self.dic[list_1[10]]
-        trcode = self.dic[list_1[11]]
-        name = self.dic[list_1[12]]
-        buy_total_price = self.dic[list_1[13]]
+        status = self.dic[list_1[0]]             #현재상태
+        rebuy = self.dic[list_1[1]]              #재매수 횟수 확인 상태 (1이면 재매수 상태로 진입)
+        initial = self.dic[list_1[2]]            #처음 거래 했을때 가격 입력
+        buy_count = self.dic[list_1[3]]          #얼마큼 살지
+        sell_price = self.dic[list_1[4]]         #판매 가격
+        rebuy_count = self.dic[list_1[5]]        #재매수 할때 팔고 남은 금맥만큼 사기
+        start_price = self.dic[list_1[6]]        #시가
+        high = self.dic[list_1[7]]               #입력 상단선
+        middle = self.dic[list_1[8]]             #입력 중단선 
+        low = self.dic[list_1[9]]                #입력 하단선
+        price = self.dic[list_1[10]]             #현재가
+        trcode = self.dic[list_1[11]]            #티커 6자리
+        name = self.dic[list_1[12]]              #종목 이름
+        buy_total_price = self.dic[list_1[13]]   #입력 총금액
        
         middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
         
@@ -395,9 +392,9 @@ class Kiwoom(QAxWidget):
         
         #초기상태
         if status == "초기상태":
-            #시가가 중하중단선, 하단선 사이에 있으면 매수
+            #현재가가 각 라인에 도달하면 매수
             if start_price <= middle_low and start_price >= low :
-                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 10,  51600 ,"00", "" ) #지정가
+                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 10,  71600 ,"00", "" ) #지정가
                 self.dic[list_1[0]] = "매수상태"
                 self.dic[list_1[2]] = price
                 self.dic[list_1[3]] = buy_number
@@ -474,9 +471,6 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[0]] = "익절매도"
                 
             
-
-
-
 
                 
 
