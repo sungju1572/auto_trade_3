@@ -202,6 +202,10 @@ class MyWindow(QMainWindow, form_class):
             self.plainTextEdit.appendPlainText("선택 종목삭제")
         
         
+    #호가 받아오는 함수
+    def get_hoga(self, trcode):
+        self.kiwoom.set_input_value("종목코드", trcode)
+        self.kiwoom.comm_rq_data("opt10004_req", "opt10004", 0, "2000")
         
 
     #tableWidget_3 에서 값 얻어오기
@@ -229,7 +233,12 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_initial'] = 0 
             self.kiwoom.dic[self.stock_list[i][0] + '_buy_count'] = 0 
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_price'] = 0 
-            self.kiwoom.dic[self.stock_list[i][0] + '_rebuy_count'] = 0 
+            
+            self.kiwoom.dic[self.stock_list[i][0] + '_rebuy_count'] = 0
+            
+            self.get_hoga(self.stock_list[i][4])
+            
+            self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
             
             
             if i ==0:
