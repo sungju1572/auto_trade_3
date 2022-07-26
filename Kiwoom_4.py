@@ -22,7 +22,7 @@ class Kiwoom(QAxWidget):
         self.dic = {}
         
         self.rebuy = 1 #재매수 횟수 (1번만 가능하도록)
-      
+        self.hoga = 0
 
         
     #COM오브젝트 생성
@@ -87,6 +87,12 @@ class Kiwoom(QAxWidget):
         ret = self.dynamicCall("CommGetData(QString, QString, QString, int, QString)", code, #더이상 지원 안함??
                                real_type, field_name, index, item_name)
         return ret.strip()
+    
+    #실제 데이터 가져오기 2
+    def _get_comm_data(self, trcode, recordname, index, itemname):
+        result = self.dynamicCall("GetCommData(QString, QString, int, QString)", trcode, recordname, index, itemname)
+        return result
+    
 
     #수신받은 데이터 반복횟수
     def _get_repeat_cnt(self, trcode, rqname):
@@ -251,6 +257,8 @@ class Kiwoom(QAxWidget):
             self._opw00001(rqname, trcode)
         elif rqname == "opw00018_req": #계좌평가잔고 내역 요청
             self._opw00018(rqname, trcode)
+        elif rqname == "opt10004_req":
+            self._opt10004(rqname, trcode)
 
 
 
@@ -315,6 +323,14 @@ class Kiwoom(QAxWidget):
             self.ohlcv['volume'].append(int(volume))
             
 
+    def _opt10004(self, rqname, trcode):
+        item_hoga_10 = self._get_comm_data(trcode, rqname, 0, "매도10차선호가")
+        item_hoga_9 = self._get_comm_data(trcode, rqname, 0, "매도9차선호가")
+        
+        self.hoga = int(item_hoga_10[1:]) - int(item_hoga_9[1:])
+        
+        print("호가--------------------------------------------:", self.hoga)
+        
     
 
     #opw박스 초기화 (주식)
