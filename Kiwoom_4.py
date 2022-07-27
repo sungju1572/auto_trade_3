@@ -123,10 +123,16 @@ class Kiwoom(QAxWidget):
     def _handler_real_data(self, trcode, real_type, data):
         
         # 체결 시간 
-        time =  self.get_comm_real_data(trcode, 20)
-        date = datetime.datetime.now().strftime("%Y-%m-%d ")
-        time =  datetime.datetime.strptime(date + time, "%Y-%m-%d %H%M%S")
-        print("체결시간 :", time, end=" ")
+        if real_type == "주식체결":
+            time =  self.get_comm_real_data(trcode, 20)
+            date = datetime.datetime.now().strftime("%Y-%m-%d ")
+            time =  datetime.datetime.strptime(date + time, "%Y-%m-%d %H%M%S")
+            print("체결시간 :", time)
+
+
+        #전일대비
+        compare = self.get_comm_real_data(trcode, 12)
+        print("전일대비 :---------", compare)
 
         # 현재가 
         price =  self.get_comm_real_data(trcode, 10)
