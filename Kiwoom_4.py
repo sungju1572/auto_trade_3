@@ -132,7 +132,7 @@ class Kiwoom(QAxWidget):
 
         #전일대비
         compare = self.get_comm_real_data(trcode, 12)
-        print("전일대비 :---------", compare)
+
 
         # 현재가 
         price =  self.get_comm_real_data(trcode, 10)
@@ -471,73 +471,163 @@ class Kiwoom(QAxWidget):
             if price <= low - 4*hoga and buy_line == "하단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태"
+                self.dic[list_1[4]] = price * buy_count
+                self.dic[list_1[6]] = ""
                 self.ui.plainTextEdit.appendPlainText("강제청산 | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
             #중단선 밑 4호가
             if price <= middle - 4*hoga and buy_line == "중단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태"
+                self.dic[list_1[4]] = price * buy_count
+                self.dic[list_1[6]] = ""
                 self.ui.plainTextEdit.appendPlainText("강제청산 | 중단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
             #상단선 밑 4호가    
             if  price <= high - 4*hoga and buy_line == "상단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태"
+                self.dic[list_1[4]] = price * buy_count
+                self.dic[list_1[6]] = ""
                 self.ui.plainTextEdit.appendPlainText("강제청산 | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
             
             #매도 조건 만들기
             
-    #수정하기 
+        #재매수상태
         elif status == "재매수대기상태":
-                        #현재가가 각 라인에 도달하면 매수
+            sell_count = int(int(sell_price) / int(price))
+            #현재가가 각 라인에 도달하면 매수
             #하단선 밑일 때 하단선 돌파시 매수
             if price <= low :
                 if price == low :
-                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
-                    self.dic[list_1[0]] = "매수상태"
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태2"
                     self.dic[list_1[2]] = price
-                    self.dic[list_1[3]] = buy_number
+                    self.dic[list_1[5]] = sell_count
                     self.dic[list_1[6]] = "하단선매수"
-                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    self.ui.plainTextEdit.appendPlainText("재매수 :"+ name + " 재매수가격 :" + str(price) + " 재매수수량 : " + str(sell_count))
                     
                 else : 
-                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑 | 종목 : " + name + " | 현재가 :" + str(price))
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
 
             #현재가 중단선, 하단선 사이일 때 중단선 돌파시 매수
             elif  price > low and price <= middle :
                 if price == middle:
-                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
-                    self.dic[list_1[0]] = "매수상태"
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태2"
                     self.dic[list_1[2]] = price
-                    self.dic[list_1[3]] = buy_number
+                    self.dic[list_1[5]] = sell_count
                     self.dic[list_1[6]] = "중단선매수"
-                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    self.ui.plainTextEdit.appendPlainText("재매수 :"+ name + " 재매수가격 :" + str(price) + " 재매수수량 : " + str(sell_count))
                     
                 else : 
-                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 & 중단선 사이 | 종목 : " + name + " | 현재가 :" + str(price))
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 & 중단선 사이(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
 
 
             #현재가 상단선, 중단선 사이일 때 상단선 돌파시 매수
             elif  price > middle and price <= high :
                 if price == high:
-                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
-                    self.dic[list_1[0]] = "매수상태"
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태2"
                     self.dic[list_1[2]] = price
-                    self.dic[list_1[3]] = buy_number
+                    self.dic[list_1[5]] = sell_count
                     self.dic[list_1[6]] = "상단선매수"
-                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
+                    self.ui.plainTextEdit.appendPlainText("재매수 :"+ name + " 재매수가격 :" + str(price) + " 재매수수량 : " + str(sell_count))
                     
                 else : 
-                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이 | 종목 : " + name + " | 현재가 :" + str(price))
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
             
             #현재가 상단선 위일 경우 대기
             elif  price > high :
-                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위 | 종목 : " + name + " | 현재가 :" + str(price))
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
             
                     
+     
+         #매수상태2
+                 #매수 상태
+        elif status == "매수상태2":
+            #강제 청산 
+            #하단선 밑 4호가
+            if price <= low - 4*hoga and buy_line == "하단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
+                self.dic[list_1[0]] = "재매수대기상태2"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+            #중단선 밑 4호가
+            if price <= middle - 4*hoga and buy_line == "중단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
+                self.dic[list_1[0]] = "재매수대기상태2"
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 중단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+            #상단선 밑 4호가    
+            if  price <= high - 4*hoga and buy_line == "상단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
+                self.dic[list_1[0]] = "재매수대기상태2"
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+            
+            #매도 조건 만들기
             
             
+        #재매수상태 2
+        elif status == "재매수대기상태2":
+            if price <= low :
+                if price == low :
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 1,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태3"
+                    self.dic[list_1[6]] = "하단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재재매수 :"+ name + " 재재매수가격 :" + str(price) + " 재재매수수량 : " + " 1")
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+
+            #현재가 중단선, 하단선 사이일 때 중단선 돌파시 매수
+            elif  price > low and price <= middle :
+                if price == middle:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 1,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태3"
+                    self.dic[list_1[6]] = "중단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재재매수 :"+ name + " 재재매수가격 :" + str(price) + " 재재매수수량 : " + " 1")
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 & 중단선 사이(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+
+
+            #현재가 상단선, 중단선 사이일 때 상단선 돌파시 매수
+            elif  price > middle and price <= high :
+                if price == high:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 1,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태3"
+                    self.dic[list_1[6]] = "상단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재재매수 :"+ name + " 재재매수가격 :" + str(price) + " 재재매수수량 : " + " 1")
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+            
+            #현재가 상단선 위일 경우 대기
+            elif  price > high :
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
                 
-                
-                
+        #매수상태3
+        elif status == "매수상태3":
+            #강제 청산 
+            #하단선 밑 4호가
+            if price <= low - 4*hoga and buy_line == "하단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
+                self.dic[list_1[0]] = "거래끝"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
+            #중단선 밑 4호가
+            if price <= middle - 4*hoga and buy_line == "중단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
+                self.dic[list_1[0]] = "거래끝"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
+            #상단선 밑 4호가    
+            if  price <= high - 4*hoga and buy_line == "상단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
+                self.dic[list_1[0]] = "거래끝"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
+                    
+        
+        
 
 
 #재매수 고치기 (수량 얼마나 살지?)      
