@@ -8,7 +8,6 @@ import sqlite3
 import datetime
 import numpy as np
 
-
 TR_REQ_TIME_INTERVAL = 0.2
 
 class Kiwoom(QAxWidget):
@@ -157,14 +156,16 @@ class Kiwoom(QAxWidget):
                     low = float(self.ui.stock_list[i][3])
                     name = self.ui.stock_list[i][0]
                     buy_total_price = self.ui.stock_list[i][5]
+                    compare = self.get_comm_real_data(trcode, 12).strip()
                     
                     
-                    if start_price  == "":
-                        self.ui.plainTextEdit_2.appendPlainText("시가 입력 대기중 :" + name )
+                    if start_price  == "" or compare == "":
+                        pass
+                        #self.ui.plainTextEdit_2.appendPlainText("시가 입력 대기중 :" + name )
                     else:
                         start_price  = float(start_price[1:])
                         price = float(price[1:])
-                    
+                        compare = float(compare)
                     
                         self.dic[self.ui.stock_list[i][0] + '_start_price'] = start_price  
                         self.dic[self.ui.stock_list[i][0] + '_high'] = high
@@ -174,8 +175,11 @@ class Kiwoom(QAxWidget):
                         self.dic[self.ui.stock_list[i][0] + '_trcode'] = trcode
                         self.dic[self.ui.stock_list[i][0] + '_name'] = name
                         self.dic[self.ui.stock_list[i][0] + '_buy_total'] = buy_total_price
+                        self.dic[self.ui.stock_list[i][0] + '_compare'] = compare
                         
                         print("3개 list", self.dic)
+                        
+                        
                         
                         self.strategy(name)
                         
@@ -333,7 +337,7 @@ class Kiwoom(QAxWidget):
         item_hoga_10 = self._get_comm_data(trcode, rqname, 0, "매도3차선호가")
         item_hoga_9 = self._get_comm_data(trcode, rqname, 0, "매도2차선호가")
         
-        self.hoga = int(item_hoga_10[1:]) - int(item_hoga_9[1:])
+        self.hoga = abs(int(item_hoga_10.strip()[1:]) - int(item_hoga_9.strip()[1:]))
 
         
     
@@ -407,6 +411,7 @@ class Kiwoom(QAxWidget):
         trcode = self.dic[list_1[13]]            #티커 6자리
         name = self.dic[list_1[14]]              #종목 이름
         buy_total_price = self.dic[list_1[15]]   #입력 총금액
+        compare = self.dic[list_1[16]]           #현재가 전일대비
        
         middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
         
@@ -563,6 +568,8 @@ class Kiwoom(QAxWidget):
                 self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
             
             #매도 조건 만들기
+            
+            
             
             
         #재매수상태 2
