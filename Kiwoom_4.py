@@ -496,7 +496,7 @@ class Kiwoom(QAxWidget):
             
             #매도 조건 만들기
             #종목별 시가 등락률 계산하기
-            if 시가등락률 < 0.7 :
+            if 시가등락률 < 0.07 :
                 if abs(시가등락률 )+ compare == 0.7 : #기준봉매매 라인의 합이 7% 되었을 때)
                     per_count7 = int(round(buy_count * 0.3, 0))
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
@@ -508,6 +508,9 @@ class Kiwoom(QAxWidget):
                         #1.1 14찍었다가 20까지 올라가면 남은 잔량 20퍼 매도
                         #1.2 14찍었다가 10으로 떨어지면 남은 잔량 20퍼 매도
                     #2. 7% 찍었다가 5%까지 하락시 50% 매도
+                        #
+            elif 시가등락률 >0.07 and 시가등락률 < 0.2:
+                #
                     
                     
             
