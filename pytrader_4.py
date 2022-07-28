@@ -236,8 +236,8 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_rebuy_count'] = 0
             self.kiwoom.dic[self.stock_list[i][0] + '_buy_line'] = ""
             
-            self.get_hoga(self.stock_list[i][4])
             
+            self.get_hoga(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
             
             
