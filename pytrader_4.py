@@ -6,6 +6,7 @@ from Kiwoom_4 import *
 import time
 from os import environ
 
+
 form_class = uic.loadUiType("exam.ui")[0]
 
 
