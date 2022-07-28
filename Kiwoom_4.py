@@ -495,12 +495,16 @@ class Kiwoom(QAxWidget):
                 self.ui.plainTextEdit.appendPlainText("강제청산 | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
             
             #매도 조건 만들기
-            
+            #종목별 시가 등락률 계산하기
             if 시가등락률 < 0.7 :
-                if abs(시가등락률 )+ compare == 0.7 :
+                if abs(시가등락률 )+ compare == 0.7 : #기준봉매매 라인의 합이 7% 되었을 때)
                     per_count7 = int(round(buy_count * 0.3, 0))
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
-                
+                    self.dic[list_1[3]]   = buy_count - per_count7 #남은 수량
+                    self.dic[list_1[4]] =   #남은 잔고 계산해야함
+                    #지금 어떤 상태인지 나타내는 변수 추가하기
+                    
+                    
             
             
         #재매수상태
