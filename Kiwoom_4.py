@@ -496,6 +496,13 @@ class Kiwoom(QAxWidget):
             
             #매도 조건 만들기
             
+            if 시가등락률 < 0.7 :
+                if abs(시가등락률 )+ compare == 0.7 :
+                    per_count7 = int(round(buy_count * 0.3, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
+                
+            
+            
         #재매수상태
         elif status == "재매수대기상태":
             sell_count = int(int(sell_price) / int(price))
