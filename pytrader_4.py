@@ -65,6 +65,7 @@ class MyWindow(QMainWindow, form_class):
 
 
 
+
     #종목 ui에 띄우기
     def code_changed(self):
         code = self.lineEdit.text()
