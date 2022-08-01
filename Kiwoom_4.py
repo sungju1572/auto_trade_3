@@ -269,6 +269,8 @@ class Kiwoom(QAxWidget):
             self._opw00018(rqname, trcode)
         elif rqname == "opt10004_req":
             self._opt10004(rqname, trcode)
+        elif rqname == "opt10002_req":
+            self._opt10002(rqname, trcode)
 
 
 
@@ -332,14 +334,18 @@ class Kiwoom(QAxWidget):
             self.ohlcv['close'].append(int(close))
             self.ohlcv['volume'].append(int(volume))
             
-
+        
+    #호가 가져오기
     def _opt10004(self, rqname, trcode):
         item_hoga_10 = self._get_comm_data(trcode, rqname, 0, "매도3차선호가")
         item_hoga_9 = self._get_comm_data(trcode, rqname, 0, "매도2차선호가")
         
         self.hoga = abs(int(item_hoga_10.strip()[1:]) - int(item_hoga_9.strip()[1:]))
 
-        
+    
+    #전일 종가 가져오기
+    def _opt10002(self, rqname, trcode):
+        self.last_close = self._get_comm_data(trcode, rqname, 0, "기준가")    
     
 
     #opw박스 초기화 (주식)
