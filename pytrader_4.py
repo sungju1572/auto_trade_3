@@ -61,7 +61,7 @@ class MyWindow(QMainWindow, form_class):
         
         self.lineEdit_8.textChanged.connect(self.profit_percent)# 익절 기준
         
-
+        
 
 
 
@@ -209,6 +209,12 @@ class MyWindow(QMainWindow, form_class):
         self.kiwoom.set_input_value("종목코드", trcode)
         self.kiwoom.comm_rq_data("opt10004_req", "opt10004", 0, "2000")
         
+    #전일종가 받아오는 함수
+    def get_last_close(self, trcode):
+        self.kiwoom.set_input_value("종목코드", trcode)
+        self.kiwoom.comm_rq_data("opt10002_req", "opt10002", 0, "2000")
+
+
 
     #tableWidget_3 에서 값 얻어오기
     def get_label(self):
@@ -241,6 +247,9 @@ class MyWindow(QMainWindow, form_class):
             
             self.get_hoga(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
+            
+            self.get_last_close(self.stock_list[i][4])
+            self.kiwoom.dic[self.stock_list[i][0] + '_last_close'] = self.kiwoom.last_close 
             
             
             if i ==0:
