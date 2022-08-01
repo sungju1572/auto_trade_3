@@ -345,7 +345,8 @@ class Kiwoom(QAxWidget):
     
     #전일 종가 가져오기
     def _opt10002(self, rqname, trcode):
-        self.last_close = self._get_comm_data(trcode, rqname, 0, "기준가")    
+        last_close = self._get_comm_data(trcode, rqname, 0, "기준가")    
+        self.last_close = float(last_close.strip())
     
 
     #opw박스 초기화 (주식)
@@ -409,19 +410,20 @@ class Kiwoom(QAxWidget):
         rebuy_count = self.dic[list_1[5]]        #재매수 할때 팔고 남은 금맥만큼 사기
         buy_line = self.dic[list_1[6]]           #어떤선에서 들어갔는지
         hoga = self.dic[list_1[7]]               #호가
-        start_price = self.dic[list_1[8]]        #시가
-        high = self.dic[list_1[9]]               #입력 상단선
-        middle = self.dic[list_1[10]]            #입력 중단선 
-        low = self.dic[list_1[11]]               #입력 하단선
-        price = self.dic[list_1[12]]             #현재가
-        trcode = self.dic[list_1[13]]            #티커 6자리
-        name = self.dic[list_1[14]]              #종목 이름
-        buy_total_price = self.dic[list_1[15]]   #입력 총금액
-        compare = self.dic[list_1[16]]           #현재가 전일대비
+        last_close = self.dic[list_1[8]]         #전일종가
+        start_price = self.dic[list_1[9]]        #시가
+        high = self.dic[list_1[10]]              #입력 상단선
+        middle = self.dic[list_1[11]]            #입력 중단선 
+        low = self.dic[list_1[12]]               #입력 하단선
+        price = self.dic[list_1[13]]             #현재가
+        trcode = self.dic[list_1[14]]            #티커 6자리
+        name = self.dic[list_1[15]]              #종목 이름
+        buy_total_price = self.dic[list_1[16]]   #입력 총금액
+        compare = self.dic[list_1[17]]           #현재가 전일대비
        
         middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
-        
-        buy_number = int(int(buy_total_price) / int(price))
+        buy_number = int(int(buy_total_price) / int(price)) #매수할 수량
+        fluctuation_rate = (start_price - last_close) / (start_price) #시가등락률
 
         
         #초기상태
@@ -499,7 +501,8 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[4]] = price * buy_count
                 self.dic[list_1[6]] = ""
                 self.ui.plainTextEdit.appendPlainText("강제청산 | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
-            
+
+                     
             #매도 조건 만들기
             #종목별 시가 등락률 계산하기
             if 시가등락률 < 0.07 :
@@ -518,7 +521,7 @@ class Kiwoom(QAxWidget):
             elif 시가등락률 >0.07 and 시가등락률 < 0.2:
                 #
                     
-                    
+                            
             
             
         #재매수상태
