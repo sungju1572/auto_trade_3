@@ -411,19 +411,21 @@ class Kiwoom(QAxWidget):
         buy_line = self.dic[list_1[6]]           #어떤선에서 들어갔는지
         hoga = self.dic[list_1[7]]               #호가
         last_close = self.dic[list_1[8]]         #전일종가
-        start_price = self.dic[list_1[9]]        #시가
-        high = self.dic[list_1[10]]              #입력 상단선
-        middle = self.dic[list_1[11]]            #입력 중단선 
-        low = self.dic[list_1[12]]               #입력 하단선
-        price = self.dic[list_1[13]]             #현재가
-        trcode = self.dic[list_1[14]]            #티커 6자리
-        name = self.dic[list_1[15]]              #종목 이름
-        buy_total_price = self.dic[list_1[16]]   #입력 총금액
-        compare = self.dic[list_1[17]]           #현재가 전일대비
+        sell_status_1 = self.dic[list_1[9]]      #매도조건상태1
+        sell_status_2 = self.dic[list_1[10]]     #매도조건상태2
+        start_price = self.dic[list_1[11]]       #시가
+        high = self.dic[list_1[12]]              #입력 상단선
+        middle = self.dic[list_1[13]]            #입력 중단선 
+        low = self.dic[list_1[14]]               #입력 하단선
+        price = self.dic[list_1[15]]             #현재가
+        trcode = self.dic[list_1[16]]            #티커 6자리
+        name = self.dic[list_1[17]]              #종목 이름
+        buy_total_price = self.dic[list_1[18]]   #입력 총금액
+        compare = self.dic[list_1[19]]           #현재가 전일대비
        
         middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
         buy_number = int(int(buy_total_price) / int(price)) #매수할 수량
-        fluctuation_rate = (start_price - last_close) / (start_price) #시가등락률
+        fluctuation_rate = round(((start_price - last_close) / (start_price))*100 ,2)#시가등락률
 
         
         #초기상태
@@ -505,23 +507,54 @@ class Kiwoom(QAxWidget):
                      
             #매도 조건 만들기
             #종목별 시가 등락률 계산하기
-            if 시가등락률 < 0.07 :
-                if abs(시가등락률 )+ compare == 0.7 : #기준봉매매 라인의 합이 7% 되었을 때)
+            if fluctuation_rate < 7 :
+                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" and sell_status_2 =="초기상태": #기준봉매매 라인의 합이 7% 되었을 때)
                     per_count7 = int(round(buy_count * 0.3, 0))
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
-                    self.dic[list_1[3]]   = buy_count - per_count7 #남은 수량
-                    self.dic[list_1[4]] =   #남은 잔고 계산해야함
-                    #지금 어떤 상태인지 나타내는 변수 추가하기
-                if 상태 == 0 :
-                    #1. 7% 찍었다가 14%도달시 50%매도
-                        #1.1 14찍었다가 20까지 올라가면 남은 잔량 20퍼 매도
-                        #1.2 14찍었다가 10으로 떨어지면 남은 잔량 20퍼 매도
-                    #2. 7% 찍었다가 5%까지 하락시 50% 매도
-                        #
-            elif 시가등락률 >0.07 and 시가등락률 < 0.2:
-                #
+                    self.dic[list_1[3]] = buy_count - per_count7 #남은 수량
+                    self.dic[list_1[4]] +=  per_count7 *price  #남은 잔고 
+                    self.dic[list_1[9]] = "7도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 7%도달 , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count7))
+                elif sell_status_1 == "7도달상태" :
+                    if abs(fluctuation_rate)+ compare == 14:
+                        per_count14 = int(round(buy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = buy_count - per_count14  #남은 수량
+                        self.dic[list_1[4]] +=  per_count14  *price  #남은 잔고 
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 5:
+                        per_count5 = int(round(buy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count5 ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = buy_count - per_count5  #남은 수량
+                        self.dic[list_1[4]] +=  per_count5  *price  #남은 잔고 
+                        self.dic[list_1[9]] = "5도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 5%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count5))
+                        
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
+                        self.dic[list_1[9]] = ""
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    elif abs(fluctuation_rate)+ compare == 10 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = ""
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                     
-                            
+                elif sell_status_1 =="5도달상태" :
+                    if abs(fluctuation_rate)+ compare == 10 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = ""
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    
+                    
+ 
             
             
         #재매수상태
