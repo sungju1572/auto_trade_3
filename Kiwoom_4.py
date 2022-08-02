@@ -581,7 +581,23 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[9]] = ""
                         self.ui.plainTextEdit.appendPlainText("라인의 합 8%도달 , 70%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
-                elif sell_status_1 == "14도달상태"
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
+                        self.dic[list_1[9]] = ""
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    elif abs(fluctuation_rate)+ compare == 12 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = ""
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 12%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                #시초가 10%이상에 발생, 20%이상에서 발생 추가
+                    
                         
                     
                     
