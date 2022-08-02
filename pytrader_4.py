@@ -61,9 +61,7 @@ class MyWindow(QMainWindow, form_class):
         
         self.lineEdit_8.textChanged.connect(self.profit_percent)# 익절 기준
         
-        
-
-
+    
 
 
     #종목 ui에 띄우기
@@ -250,6 +248,10 @@ class MyWindow(QMainWindow, form_class):
             
             self.get_last_close(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_last_close'] = self.kiwoom.last_close 
+            
+            #매도조건 상태 2가지
+            self.kiwoom.dic[self.stock_list[i][0] + '_sell_status1'] = '초기상태'
+            self.kiwoom.dic[self.stock_list[i][0] + '_sell_status2'] = '초기상태'
             
             
             if i ==0:
