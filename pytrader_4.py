@@ -224,6 +224,7 @@ class MyWindow(QMainWindow, form_class):
                 sec_list.append(self.tableWidget_3.item(init_num,i).text())
             init_list.append(sec_list)
             init_num += 1
+        print(init_list)
         return init_list
                 
     
@@ -253,6 +254,7 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status1'] = '초기상태'
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status2'] = '초기상태'
             
+            time.sleep(1)
             
             if i ==0:
                 self.kiwoom.SetRealReg("1000", self.stock_list[i][4], "20;10", "0")
@@ -260,6 +262,7 @@ class MyWindow(QMainWindow, form_class):
             else: 
                 self.kiwoom.SetRealReg("1000", self.stock_list[i][4], "20;10", "1")
                 self.stock_ticker_list.append(self.stock_list[i][4])
+            
 
 
 
