@@ -22,7 +22,7 @@ class Kiwoom(QAxWidget):
         
         self.rebuy = 1 #재매수 횟수 (1번만 가능하도록)
         self.hoga = 0
-
+        self.last_close = 0
         
     #COM오브젝트 생성
     def _create_kiwoom_instance(self):
@@ -423,7 +423,6 @@ class Kiwoom(QAxWidget):
         buy_total_price = self.dic[list_1[18]]   #입력 총금액
         compare = self.dic[list_1[19]]           #현재가 전일대비
        
-        middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
         buy_number = int(int(buy_total_price) / int(price)) #매수할 수량
         fluctuation_rate = round(((start_price - last_close) / (start_price))*100 ,2)#시가등락률
 
@@ -508,7 +507,7 @@ class Kiwoom(QAxWidget):
             #매도 조건 만들기
             #종목별 시가 등락률 계산하기
             if fluctuation_rate < 7 :
-                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" and sell_status_2 =="초기상태": #기준봉매매 라인의 합이 7% 되었을 때)
+                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
                     per_count7 = int(round(buy_count * 0.3, 0))
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
                     self.dic[list_1[3]] = buy_count - per_count7 #남은 수량
@@ -537,14 +536,14 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                     elif abs(fluctuation_rate)+ compare == 10 :
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                     
                 elif sell_status_1 =="5도달상태" :
@@ -553,12 +552,12 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 3%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                     
                 else: 
                     self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
-                
+            #시가등락률 7이상 10미만    
             elif fluctuation_rate >= 7 and fluctuation_rate < 10 :
                 if abs(fluctuation_rate)+ compare == 10 and sell_status_1 =="초기상태":
                     per_count10 = int(round(buy_count * 0.3, 0))
@@ -579,7 +578,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 8%도달 , 70%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                 elif sell_status_1 == "14도달상태":
                     if abs(fluctuation_rate)+ compare == 20 :
@@ -587,27 +586,41 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
                     elif abs(fluctuation_rate)+ compare == 12 :
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[0]] = "재매수대기상태"
                         self.dic[list_1[3]] = 0  #남은 수량
                         self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
-                        self.dic[list_1[9]] = ""
+                        self.dic[list_1[9]] = "초기상태"
                         self.ui.plainTextEdit.appendPlainText("라인의 합 12%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
-                #시초가 10%이상에 발생, 20%이상에서 발생 추가
-                    
                         
-                    
-                    
-                    
-                    
-                
-                
-                    
- 
-            
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7%이상 10% 미만, 7%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 10이상 20미만
+            elif fluctuation_rate >=10 and fluctuation_rate < 20:
+                #13%도달
+                if abs(fluctuation_rate) + compare == 13 and sell_status_1 =="초기상태":
+                    per_count13 = int(round(buy_count * 0.5, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count13,  0 ,"03", "" )
+                    self.dic[list_1[3]] = buy_count - per_count14  #남은 수량
+                    self.dic[list_1[4]] +=  per_count14  *price  #남은 잔고 
+                    self.dic[list_1[9]] = "13도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 13%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count13))
+                elif sell_status_1 == "13도달상태":
+                    if abs(fluctuation_rate) + compare == 20:
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 10%이상 20% 미만, 10%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+       
+  
             
         #재매수상태
         elif status == "재매수대기상태":
@@ -668,20 +681,119 @@ class Kiwoom(QAxWidget):
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태2"
                 self.dic[list_1[6]] = ""
-                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
             #중단선 밑 4호가
             if price <= middle - 4*hoga and buy_line == "중단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태2"
-                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 중단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 중단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
             #상단선 밑 4호가    
             if  price <= high - 4*hoga and buy_line == "상단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태2"
-                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
             
             #매도 조건 만들기
-            
+            #종목별 시가 등락률 계산하기
+            if fluctuation_rate < 7 :
+                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
+                    per_count7 = int(round(rebuy_count * 0.3, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
+                    self.dic[list_1[5]] = rebuy_count - per_count7 #남은 수량
+                    self.dic[list_1[9]] = "7도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 7%도달(재매수상태) , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count7))
+                elif sell_status_1 == "7도달상태" :
+                    if abs(fluctuation_rate)+ compare == 14:
+                        per_count14 = int(round(rebuy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count14  #남은 수량
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달(재매수상태) , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 5:
+                        per_count5 = int(round(rebuy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count5 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count5  #남은 수량
+                        self.dic[list_1[9]] = "5도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 5%도달(재매수상태) , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count5))
+                        
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    elif abs(fluctuation_rate)+ compare == 10 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    
+                elif sell_status_1 =="5도달상태" :
+                    if abs(fluctuation_rate)+ compare == 3 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 3%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    
+                else: 
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 7이상 10미만    
+            elif fluctuation_rate >= 7 and fluctuation_rate < 10 :
+                if abs(fluctuation_rate)+ compare == 10 and sell_status_1 =="초기상태":
+                    per_count10 = int(round(rebuy_count * 0.3, 0))
+                    self.dic[list_1[5]] = rebuy_count - per_count10 #남은 수량
+                    self.dic[list_1[9]] = "10도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 30%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count10))
+                elif sell_status_1 == "10도달상태":
+                    if abs(fluctuation_rate)+ compare == 14 :
+                        per_count14 = int(round(rebuy_count  * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count14  #남은 수량
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 8 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 8%도달 , 70%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    elif abs(fluctuation_rate)+ compare == 12 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count  ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 12%도달 , 20%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7%이상 10% 미만, 7%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 10이상 20미만
+            elif fluctuation_rate >=10 and fluctuation_rate < 20:
+                #13%도달
+                if abs(fluctuation_rate) + compare == 13 and sell_status_1 =="초기상태":
+                    per_count13 = int(round(rebuy_count * 0.5, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count13,  0 ,"03", "" )
+                    self.dic[list_1[5]] = rebuy_count  - per_count14  #남은 수량
+                    self.dic[list_1[9]] = "13도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 13%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count13))
+                elif sell_status_1 == "13도달상태":
+                    if abs(fluctuation_rate) + compare == 20:
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count  ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 10%이상 20% 미만, 10%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+       
+  
             
             
             
@@ -747,158 +859,413 @@ class Kiwoom(QAxWidget):
                 self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
                     
         
-        
-
-
-#재매수 고치기 (수량 얼마나 살지?)      
-                
-        elif status == "재매수대기상태" and rebuy == 1 :
-            if price >=low :
-                    sell_count = int(int(sell_price) / int(price))
-                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
-                    self.dic[list_1[0]] = "재매수상태"
-                    self.ui.plainTextEdit.appendPlainText("현재가 하단선 돌파 매수 (재매수) :" + name + " 매수수량 : " + str(sell_count))
-                    self.dic[list_1[1]] = 0
-                    self.dic[list_1[5]] = sell_count
-                   
-            else :
-                    self.ui.plainTextEdit_2.appendPlainText("재매수 대기중 :" + name + "| 현재가 : " + str(price))
-                    
-        elif status == "재매수대기상태" and rebuy == 0 :
-            self.ui.plainTextEdit.appendPlainText("재매수 횟수 0 회, 거래종료 :" + name)
-            self.dic[list_1[1]] = 2
-            
-            
-            ######
-            
-        elif status == "재매수상태":
-            if price < low * 0.99 :
-                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
-                self.dic[list_1[0]] = "재매수대기상태"
-                self.dic[list_1[4]] = price * buy_count
-                self.ui.plainTextEdit.appendPlainText("하단가 1% 미만 지점 이탈 | 매도 :" + name)
-            
-            #보유중일때 현재가가 익절기준을 넘으면 매도   
-            elif price >= initial + (initial * self.ui.take_profit/100):
-                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
-                self.ui.plainTextEdit.appendPlainText("익절 퍼센트 초과 | 매도 :" + name)
-                self.dic[list_1[0]] = "익절매도"
-                
-            
-
-                
-
-    #거래 전략 strategy(dic(시가 , 상단, 중단, 하단, 현재가, 종목코드, 종목이름, 현재상태, rebuy) 2개인경우
     
     def strategy_2(self, name):
-        
+
         list_1 = [k for k in self.dic.keys() if name in k ]
         
         
-        status = self.dic[list_1[0]]
-        rebuy = self.dic[list_1[1]]
-        initial = self.dic[list_1[2]]
-        buy_count = self.dic[list_1[3]]
-        sell_price = self.dic[list_1[4]] 
-        rebuy_count = self.dic[list_1[5]] 
-        start_price = self.dic[list_1[6]]
-        high = self.dic[list_1[7]]
-        middle = self.dic[list_1[8]]
-        low = self.dic[list_1[9]]
-        price = self.dic[list_1[10]]
-        trcode = self.dic[list_1[11]]
-        name = self.dic[list_1[12]]
-        buy_total_price = self.dic[list_1[13]]
+        status = self.dic[list_1[0]]             #현재상태
+        rebuy = self.dic[list_1[1]]              #재매수 횟수 확인 상태 (1이면 재매수 상태로 진입)
+        initial = self.dic[list_1[2]]            #처음 거래 했을때 가격 입력
+        buy_count = self.dic[list_1[3]]          #얼마큼 산지
+        sell_price = self.dic[list_1[4]]         #판매 가격
+        rebuy_count = self.dic[list_1[5]]        #재매수 할때 팔고 남은 금맥만큼 사기
+        buy_line = self.dic[list_1[6]]           #어떤선에서 들어갔는지
+        hoga = self.dic[list_1[7]]               #호가
+        last_close = self.dic[list_1[8]]         #전일종가
+        sell_status_1 = self.dic[list_1[9]]      #매도조건상태1
+        sell_status_2 = self.dic[list_1[10]]     #매도조건상태2
+        start_price = self.dic[list_1[11]]       #시가
+        high = self.dic[list_1[12]]              #입력 상단선
+        middle = self.dic[list_1[13]]            #입력 중단선 
+        low = self.dic[list_1[14]]               #입력 하단선
+        price = self.dic[list_1[15]]             #현재가
+        trcode = self.dic[list_1[16]]            #티커 6자리
+        name = self.dic[list_1[17]]              #종목 이름
+        buy_total_price = self.dic[list_1[18]]   #입력 총금액
+        compare = self.dic[list_1[19]]           #현재가 전일대비
+       
+        middle_low = float((float(middle) + float(low)) / 2 )#중하중단선
+        buy_number = int(int(buy_total_price) / int(price)) #매수할 수량
+        fluctuation_rate = round(((start_price - last_close) / (start_price))*100 ,2)#시가등락률
 
-        buy_number = int(int(buy_total_price) / int(price))
-
+        
         #초기상태
         if status == "초기상태":
-            #시가가 상하준단선, 하단선 사이에 있으면 매수
-            if start_price <= middle and start_price >= low :
-                self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
-                self.dic[list_1[0]] = "매수상태"
-                self.dic[list_1[3]] = buy_number
-                self.dic[list_1[2]] = price
-                
-                   
-                self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
-
-                
-            #시가가 두개 사이에 있지 않다가, 현재가가 하단선을 뚫고 올라오면 매수
-            elif start_price < low  :
-                if price >=low :
+            #현재가가 각 라인에 도달하면 매수
+            #하단선 밑일 때 하단선 돌파시 매수
+            if price <= low :
+                if price == low :
                     self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
-                    
                     self.dic[list_1[0]] = "매수상태"
                     self.dic[list_1[2]] = price
                     self.dic[list_1[3]] = buy_number
+                    self.dic[list_1[6]] = "하단선매수"
+                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
                     
-                    self.ui.plainTextEdit.appendPlainText("현재가 하단선 돌파 매수 :" + name + " 매수가격 :" + str(price)  + " 매수수량 : " + str(buy_number))
                 else : 
-                    self.ui.plainTextEdit_2.appendPlainText("현재가 하단선 밑 :" + name + "| 현재가 : " + str(price))
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑 | 종목 : " + name + " | 현재가 :" + str(price))
+
+
+            #현재가 상단선, 하단선 사이일 때 상단선 돌파시 매수
+            elif  price > low and price <= high :
+                if price == high:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, buy_number,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태"
+                    self.dic[list_1[2]] = price
+                    self.dic[list_1[3]] = buy_number
+                    self.dic[list_1[6]] = "상단선매수"
+                    self.ui.plainTextEdit.appendPlainText("매수 :"+ name + " 매수가격 :" + str(price) + " 매수수량 : " + str(buy_number))
                     
-                    
-                    
-            elif start_price > middle: 
-                self.ui.plainTextEdit_2.appendPlainText("시가 중간선 위 : "+ name + "| 현재가 : " + str(price))   
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 & 상단선 사이 | 종목 : " + name + " | 현재가 :" + str(price))
             
- 
+            #현재가 상단선 위일 경우 대기
+            elif  price > high :
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위 | 종목 : " + name + " | 현재가 :" + str(price))
+            
+                    
     
         #매수 상태
         elif status == "매수상태":
-            #현재가가 하단선의 1%밑으로 내려가면 강제 청산 
-            if price < low * 0.99 :
+            #강제 청산 
+            #하단선 밑 4호가
+            if price <= low - 4*hoga and buy_line == "하단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                 self.dic[list_1[0]] = "재매수대기상태"
                 self.dic[list_1[4]] = price * buy_count
-                self.ui.plainTextEdit.appendPlainText("하단가 1% 미만 지점 이탈 | 매도 :" + name)
-            
-            #보유중일때 현재가가 익절기준을 넘으면 매도
-            elif price >= initial + (initial * self.ui.take_profit/100):
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산 | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+
+            #상단선 밑 4호가    
+            if  price <= high - 4*hoga and buy_line == "상단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
-                self.ui.plainTextEdit.appendPlainText("익절 퍼센트 초과 | 매도 :" + name)
-                self.dic[list_1[0]] = "익절매도"
-               
-        #재매수 대기상태 수정(얼만큼 살지)     
-        elif status == "재매수대기상태" and rebuy == 1 :
-            if price >=low :
-                    sell_count = int(int(sell_price) / int(price))
+                self.dic[list_1[0]] = "재매수대기상태"
+                self.dic[list_1[4]] = price * buy_count
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산 | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+
+                     
+            #매도 조건 만들기
+            #종목별 시가 등락률 계산하기
+            if fluctuation_rate < 7 :
+                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
+                    per_count7 = int(round(buy_count * 0.3, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
+                    self.dic[list_1[3]] = buy_count - per_count7 #남은 수량
+                    self.dic[list_1[4]] +=  per_count7 *price  #남은 잔고 
+                    self.dic[list_1[9]] = "7도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 7%도달 , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count7))
+                elif sell_status_1 == "7도달상태" :
+                    if abs(fluctuation_rate)+ compare == 14:
+                        per_count14 = int(round(buy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = buy_count - per_count14  #남은 수량
+                        self.dic[list_1[4]] +=  per_count14  *price  #남은 잔고 
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 5:
+                        per_count5 = int(round(buy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count5 ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = buy_count - per_count5  #남은 수량
+                        self.dic[list_1[4]] +=  per_count5  *price  #남은 잔고 
+                        self.dic[list_1[9]] = "5도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 5%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count5))
+                        
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    elif abs(fluctuation_rate)+ compare == 10 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    
+                elif sell_status_1 =="5도달상태" :
+                    if abs(fluctuation_rate)+ compare == 3 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 3%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    
+                else: 
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 7이상 10미만    
+            elif fluctuation_rate >= 7 and fluctuation_rate < 10 :
+                if abs(fluctuation_rate)+ compare == 10 and sell_status_1 =="초기상태":
+                    per_count10 = int(round(buy_count * 0.3, 0))
+                    self.dic[list_1[3]] = buy_count - per_count10 #남은 수량
+                    self.dic[list_1[4]] +=  per_count10 *price  #남은 잔고 
+                    self.dic[list_1[9]] = "10도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count10))
+                elif sell_status_1 == "10도달상태":
+                    if abs(fluctuation_rate)+ compare == 14 :
+                        per_count14 = int(round(buy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[3]] = buy_count - per_count14  #남은 수량
+                        self.dic[list_1[4]] +=  per_count14  *price  #남은 잔고 
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 8 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 8%도달 , 70%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price  #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                    elif abs(fluctuation_rate)+ compare == 12 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 12%도달 , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7%이상 10% 미만, 7%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 10이상 20미만
+            elif fluctuation_rate >=10 and fluctuation_rate < 20:
+                #13%도달
+                if abs(fluctuation_rate) + compare == 13 and sell_status_1 =="초기상태":
+                    per_count13 = int(round(buy_count * 0.5, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count13,  0 ,"03", "" )
+                    self.dic[list_1[3]] = buy_count - per_count14  #남은 수량
+                    self.dic[list_1[4]] +=  per_count14  *price  #남은 잔고 
+                    self.dic[list_1[9]] = "13도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 13%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count13))
+                elif sell_status_1 == "13도달상태":
+                    if abs(fluctuation_rate) + compare == 20:
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태"
+                        self.dic[list_1[3]] = 0  #남은 수량
+                        self.dic[list_1[4]] +=  buy_count *price #남은 잔고 
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(buy_count))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 10%이상 20% 미만, 10%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+       
+  
+            
+        #재매수상태
+        elif status == "재매수대기상태":
+            sell_count = int(int(sell_price) / int(price))
+            #현재가가 각 라인에 도달하면 매수
+            #하단선 밑일 때 하단선 돌파시 매수
+            if price <= low :
+                if price == low :
                     self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
-                    self.dic[list_1[0]] = "재매수상태"
-                    self.ui.plainTextEdit.appendPlainText("현재가 하단선 돌파 매수 (재매수) :" + name + " 매수수량 : " + str(sell_count))
-                    self.dic[list_1[1]] = 0
+                    self.dic[list_1[0]] = "매수상태2"
+                    self.dic[list_1[2]] = price
                     self.dic[list_1[5]] = sell_count
-                   
-            else :
-                    self.ui.plainTextEdit_2.appendPlainText("재매수 대기중 :" + name  + "| 현재가 : " + str(price))
+                    self.dic[list_1[6]] = "하단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재매수 :"+ name + " 재매수가격 :" + str(price) + " 재매수수량 : " + str(sell_count))
                     
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+
+            #현재가 상단선, 하단선 사이일 때 상단선 돌파시 매수
+            elif  price > low and price <= high :
+                if price == high:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, sell_count,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태2"
+                    self.dic[list_1[2]] = price
+                    self.dic[list_1[5]] = sell_count
+                    self.dic[list_1[6]] = "상단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재매수 :"+ name + " 재매수가격 :" + str(price) + " 재매수수량 : " + str(sell_count))
                     
-        elif status == "재매수대기상태" and rebuy == 0 :
-            self.ui.plainTextEdit.appendPlainText("재매수 횟수 0 회, 거래종료 :" + name)
-            self.dic[list_1[1]] = 2
-
-
-                
-        elif status == "재매수상태":
-            if price < low * 0.99 :
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+            
+            #현재가 상단선 위일 경우 대기
+            elif  price > high :
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위(재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+            
+                    
+     
+         #매수상태2
+                 #매수 상태
+        elif status == "매수상태2":
+            #강제 청산 
+            #하단선 밑 4호가
+            if price <= low - 4*hoga and buy_line == "하단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
-                self.dic[list_1[0]] = "재매수대기상태"
-                self.dic[list_1[4]] = price * buy_count
-                self.ui.plainTextEdit.appendPlainText("하단가 1% 미만 지점 이탈 | 매도 :" + name)
-            
-            #보유중일때 현재가가 익절기준을 넘으면 매도   
-            elif price >= initial + (initial * self.ui.take_profit/100):
+                self.dic[list_1[0]] = "재매수대기상태2"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
+          #상단선 밑 4호가    
+            if  price <= high - 4*hoga and buy_line == "상단선매수":
                 self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
-                self.ui.plainTextEdit.appendPlainText("익절 퍼센트 초과 | 매도 :" + name)
-                self.dic[list_1[0]] = "익절매도"
-                
+                self.dic[list_1[0]] = "재매수대기상태2"
+                self.ui.plainTextEdit.appendPlainText("강제청산(재매수) | 상단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
             
-                
+            #매도 조건 만들기
+            #종목별 시가 등락률 계산하기
+            if fluctuation_rate < 7 :
+                if abs(fluctuation_rate)+ compare == 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
+                    per_count7 = int(round(rebuy_count * 0.3, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
+                    self.dic[list_1[5]] = rebuy_count - per_count7 #남은 수량
+                    self.dic[list_1[9]] = "7도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 7%도달(재매수상태) , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count7))
+                elif sell_status_1 == "7도달상태" :
+                    if abs(fluctuation_rate)+ compare == 14:
+                        per_count14 = int(round(rebuy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count14  #남은 수량
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달(재매수상태) , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 5:
+                        per_count5 = int(round(rebuy_count * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count5 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count5  #남은 수량
+                        self.dic[list_1[9]] = "5도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 5%도달(재매수상태) , 50%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count5))
+                        
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    elif abs(fluctuation_rate)+ compare == 10 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    
+                elif sell_status_1 =="5도달상태" :
+                    if abs(fluctuation_rate)+ compare == 3 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 3%도달(재매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    
+                else: 
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 7이상 10미만    
+            elif fluctuation_rate >= 7 and fluctuation_rate < 10 :
+                if abs(fluctuation_rate)+ compare == 10 and sell_status_1 =="초기상태":
+                    per_count10 = int(round(rebuy_count * 0.3, 0))
+                    self.dic[list_1[5]] = rebuy_count - per_count10 #남은 수량
+                    self.dic[list_1[9]] = "10도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 10%도달 , 30%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count10))
+                elif sell_status_1 == "10도달상태":
+                    if abs(fluctuation_rate)+ compare == 14 :
+                        per_count14 = int(round(rebuy_count  * 0.5, 0))
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
+                        self.dic[list_1[5]] = rebuy_count - per_count14  #남은 수량
+                        self.dic[list_1[9]] = "14도달상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 14%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count14))
+                    elif abs(fluctuation_rate)+ compare == 8 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 8%도달 , 70%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                elif sell_status_1 == "14도달상태":
+                    if abs(fluctuation_rate)+ compare == 20 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 20%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                    elif abs(fluctuation_rate)+ compare == 12 :
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count  ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 12%도달 , 20%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7%이상 10% 미만, 7%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+            #시가등락률 10이상 20미만
+            elif fluctuation_rate >=10 and fluctuation_rate < 20:
+                #13%도달
+                if abs(fluctuation_rate) + compare == 13 and sell_status_1 =="초기상태":
+                    per_count13 = int(round(rebuy_count * 0.5, 0))
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count13,  0 ,"03", "" )
+                    self.dic[list_1[5]] = rebuy_count  - per_count14  #남은 수량
+                    self.dic[list_1[9]] = "13도달상태"
+                    self.ui.plainTextEdit.appendPlainText("라인의 합 13%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(per_count13))
+                elif sell_status_1 == "13도달상태":
+                    if abs(fluctuation_rate) + compare == 20:
+                        self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count  ,  0 ,"03", "" )
+                        self.dic[list_1[0]] = "재매수대기상태2"
+                        self.dic[list_1[5]] = 0  #남은 수량
+                        self.dic[list_1[9]] = "초기상태"
+                        self.ui.plainTextEdit.appendPlainText("라인의 합 20%도달 , 50%매도(재매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : " + str(rebuy_count ))
+                        
+                else:
+                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 10%이상 20% 미만, 10%도달 대기중(재매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
+       
+  
+              
+        #재매수상태 2
+        elif status == "재매수대기상태2":
+            if price <= low :
+                if price == low :
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 1,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태3"
+                    self.dic[list_1[6]] = "하단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재재매수 :"+ name + " 재재매수가격 :" + str(price) + " 재재매수수량 : " + " 1")
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 하단선 밑(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
 
-        
+
+            #현재가 상단선, 하단선 사이일 때 상단선 돌파시 매수
+            elif  price > low and price <= high :
+                if price == high:
+                    self.send_order('send_order', "0101", self.ui.account_number, 1, trcode, 1,  0 ,"03", "" )
+                    self.dic[list_1[0]] = "매수상태3"
+                    self.dic[list_1[6]] = "상단선매수"
+                    self.ui.plainTextEdit.appendPlainText("재재매수 :"+ name + " 재재매수가격 :" + str(price) + " 재재매수수량 : " + " 1")
+                    
+                else : 
+                    self.ui.plainTextEdit_2.appendPlainText("현재가 종목 중단선 & 상단선 사이(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+            
+            #현재가 상단선 위일 경우 대기
+            elif  price > high :
+                self.ui.plainTextEdit_2.appendPlainText("현재가 종목 상단선 위(재재매수대기상태) | 종목 : " + name + " | 현재가 :" + str(price))
+                
+        #매수상태3
+        elif status == "매수상태3":
+            #강제 청산 
+            #하단선 밑 4호가
+            if price <= low - 4*hoga and buy_line == "하단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
+                self.dic[list_1[0]] = "거래끝"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
+       #상단선 밑 4호가    
+            if  price <= high - 4*hoga and buy_line == "상단선매수":
+                self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
+                self.dic[list_1[0]] = "거래끝"
+                self.dic[list_1[6]] = ""
+                self.ui.plainTextEdit.appendPlainText("강제청산(재재매수) | 하단선밑 4호가 :"+ name + " 매도가격 :" + str(price) + " 매도수량 : " + " 1 " + " 거래끝")
+                        
             
 
+    
         
 
 
