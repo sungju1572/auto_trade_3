@@ -194,16 +194,17 @@ class Kiwoom(QAxWidget):
                     low = float(self.ui.stock_list[i][3])
                     name = self.ui.stock_list[i][0]
                     buy_total_price = self.ui.stock_list[i][5]
+                    compare = self.get_comm_real_data(trcode, 12).strip()
 
                     
                     
-                    if start_price  == "":
-                        self.ui.plainTextEdit_2.appendPlainText("시가 입력 대기중 :" + name )
-              
+                    if start_price  == "" or compare == "":
+                        pass
+                        #self.ui.plainTextEdit_2.appendPlainText("시가 입력 대기중 :" + name )
                     else:
                         start_price  = float(start_price[1:])
                         price = float(price[1:])
-                        
+                        compare = float(compare)
                         
                         self.dic[self.ui.stock_list[i][0] + '_start_price'] = start_price  
                         self.dic[self.ui.stock_list[i][0] + '_high'] = high
@@ -213,6 +214,7 @@ class Kiwoom(QAxWidget):
                         self.dic[self.ui.stock_list[i][0] + '_trcode'] = trcode
                         self.dic[self.ui.stock_list[i][0] + '_name'] = name
                         self.dic[self.ui.stock_list[i][0] + '_buy_total'] = buy_total_price
+                        self.dic[self.ui.stock_list[i][0] + '_compare'] = compare
                         
                       
                         print("2개 list", self.dic)
