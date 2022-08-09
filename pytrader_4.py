@@ -61,7 +61,7 @@ class MyWindow(QMainWindow, form_class):
         self.take_profit = 0 #익절기준
         
         
-        self.lineEdit_8.textChanged.connect(self.profit_percent)# 익절 기준
+        #self.lineEdit_8.textChanged.connect(self.profit_percent)# 익절 기준
         
     
 
@@ -287,8 +287,8 @@ class MyWindow(QMainWindow, form_class):
 
 
     #익절기준 변경점
-    def profit_percent(self):
-        self.take_profit = float(self.lineEdit_8.text())
+   # def profit_percent(self):
+        #self.take_profit = float(self.lineEdit_8.text())
 
 
 
