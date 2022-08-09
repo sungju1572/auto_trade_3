@@ -51,6 +51,8 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_3.clicked.connect(self.check_stock)
         self.pushButton_5.clicked.connect(self.trade_start)
         self.pushButton_2.clicked.connect(self.delete_row)
+        self.pushButton_4.clicked.connect(self.ready_trade)
+
 
         self.row_count = 0 #tableWidget_3 에서 행 카운트하는용
         self.stock_list = [] #주시종목 담은 리스트
@@ -146,6 +148,8 @@ class MyWindow(QMainWindow, form_class):
 
         self.tableWidget_2.resizeRowsToContents()
         
+    
+        
     #주시 종목에 설정한 종목 넣기
     def check_stock(self):
         code = self.lineEdit.text()
@@ -205,12 +209,12 @@ class MyWindow(QMainWindow, form_class):
     #호가 받아오는 함수
     def get_hoga(self, trcode):
         self.kiwoom.set_input_value("종목코드", trcode)
-        self.kiwoom.comm_rq_data("opt10004_req", "opt10004", 0, "2000")
+        self.kiwoom.comm_rq_data("opt10004_req", "opt10004", 0, "3000")
         
     #전일종가 받아오는 함수
     def get_last_close(self, trcode):
         self.kiwoom.set_input_value("종목코드", trcode)
-        self.kiwoom.comm_rq_data("opt10002_req", "opt10002", 0, "2000")
+        self.kiwoom.comm_rq_data("opt10002_req", "opt10002", 0, "3000")
 
 
 
@@ -228,9 +232,8 @@ class MyWindow(QMainWindow, form_class):
         return init_list
                 
     
-
-    #거래시작 버튼눌렀을때 주시 종목별 구독
-    def trade_start(self):
+    
+    def ready_trade(self):
         self.account_number = self.comboBox.currentText()
         self.stock_list = self.get_label()
         
@@ -246,15 +249,31 @@ class MyWindow(QMainWindow, form_class):
             
             self.get_hoga(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
+            time.sleep(1)
             
             self.get_last_close(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_last_close'] = self.kiwoom.last_close 
+            time.sleep(1)
+
             
             #매도조건 상태 2가지
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status1'] = '초기상태'
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status2'] = '초기상태'
-            
-            time.sleep(1)
+        
+        
+            self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0]  )
+
+        print(self.kiwoom.dic)
+    
+
+    #거래시작 버튼눌렀을때 주시 종목별 구독
+    def trade_start(self):
+        self.account_number = self.comboBox.currentText()
+        self.stock_list = self.get_label()
+        
+
+        
+        for i in range(len(self.stock_list)):
             
             if i ==0:
                 self.kiwoom.SetRealReg("1000", self.stock_list[i][4], "20;10", "0")
