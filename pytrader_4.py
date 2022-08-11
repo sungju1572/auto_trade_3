@@ -249,11 +249,11 @@ class MyWindow(QMainWindow, form_class):
             
             self.get_hoga(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
-            time.sleep(1)
+            time.sleep(0.5)
             
             self.get_last_close(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_last_close'] = self.kiwoom.last_close 
-            time.sleep(1)
+            time.sleep(0.5)
 
             
             #매도조건 상태 2가지
