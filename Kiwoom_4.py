@@ -419,9 +419,15 @@ class Kiwoom(QAxWidget):
         rebuy_count = self.dic[list_1[list_1.index(name+'_rebuy_count')]]     #재매수 할때 팔고 남은 금맥만큼 사기
         buy_line = self.dic[list_1[list_1.index(name+'_buy_line')]]           #어떤선에서 들어갔는지
         hoga = self.dic[list_1[list_1.index(name+'_hoga')]]                   #호가
-        last_close = self.dic[list_1[list_1.index(name+'_last_close')]]       #전일종가
-        sell_status_1 = self.dic[list_1[list_1.index(name+'_sell_status1')]]  #매도조건상태1
-        sell_status_2 = self.dic[list_1[list_1.index(name+'_sell_status2')]]  #매도조건상태2
+
+        if name+'_last_close' in list_1:
+            last_close = self.dic[list_1[list_1.index(name+'_last_close')]]       #전일종가
+
+        if name+'_sell_status1' in list_1:
+            sell_status_1 = self.dic[list_1[list_1.index(name+'_sell_status1')]]  #매도조건상태1
+       
+        if name+'_sell_status2' in list_1:
+            sell_status_2 = self.dic[list_1[list_1.index(name+'_sell_status2')]]  #매도조건상태2
         start_price = self.dic[list_1[list_1.index(name+'_start_price')]]     #시가
         high = self.dic[list_1[list_1.index(name+'_high')]]                   #입력 상단선
         middle = self.dic[list_1[list_1.index(name+'_middle')]]               #입력 중단선 
@@ -1037,9 +1043,14 @@ class Kiwoom(QAxWidget):
         rebuy_count = self.dic[list_1[list_1.index(name+'_rebuy_count')]]     #재매수 할때 팔고 남은 금맥만큼 사기
         buy_line = self.dic[list_1[list_1.index(name+'_buy_line')]]           #어떤선에서 들어갔는지
         hoga = self.dic[list_1[list_1.index(name+'_hoga')]]                   #호가
-        last_close = self.dic[list_1[list_1.index(name+'_last_close')]]       #전일종가
-        sell_status_1 = self.dic[list_1[list_1.index(name+'_sell_status1')]]  #매도조건상태1
-        sell_status_2 = self.dic[list_1[list_1.index(name+'_sell_status2')]]  #매도조건상태2
+        if name+'_last_close' in list_1:
+            last_close = self.dic[list_1[list_1.index(name+'_last_close')]]       #전일종가
+
+        if name+'_sell_status1' in list_1:
+            sell_status_1 = self.dic[list_1[list_1.index(name+'_sell_status1')]]  #매도조건상태1
+       
+        if name+'_sell_status2' in list_1:
+            sell_status_2 = self.dic[list_1[list_1.index(name+'_sell_status2')]]  #매도조건상태2
         start_price = self.dic[list_1[list_1.index(name+'_start_price')]]     #시가
         high = self.dic[list_1[list_1.index(name+'_high')]]                   #입력 상단선
         middle = self.dic[list_1[list_1.index(name+'_middle')]]               #입력 중단선 
