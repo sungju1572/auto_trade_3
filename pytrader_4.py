@@ -175,6 +175,11 @@ class MyWindow(QMainWindow, form_class):
             
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
             
+            self.lineEdit.clear()
+            self.lineEdit_3.clear()
+            self.lineEdit_4.clear()
+            self.lineEdit_5.clear()
+            self.lineEdit_9.clear()
             
         elif count =="2개":
             high = self.lineEdit_6.text()
@@ -195,6 +200,12 @@ class MyWindow(QMainWindow, form_class):
             self.row_count+=1
             
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            
+            self.lineEdit.clear()
+            self.lineEdit_6.clear()
+            self.lineEdit_7.clear()
+            self.lineEdit_9.clear()
+            
             
     #제거 버튼 눌렀을때 테이블에서 행삭제        
     def delete_row(self):
