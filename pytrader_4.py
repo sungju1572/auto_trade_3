@@ -244,6 +244,7 @@ class MyWindow(QMainWindow, form_class):
                 
     
     
+    
     def ready_trade(self):
         self.account_number = self.comboBox.currentText()
         self.stock_list = self.get_label()
