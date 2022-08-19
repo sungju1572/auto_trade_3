@@ -174,12 +174,14 @@ class MyWindow(QMainWindow, form_class):
             self.row_count+=1
             
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            #self.textEdit.append("종목추가 : "+ name)
+            #self.textEdit.setTextColor("종목추가 : "+ name)
             
             self.lineEdit.clear()
             self.lineEdit_3.clear()
             self.lineEdit_4.clear()
             self.lineEdit_5.clear()
-            self.lineEdit_9.clear()
+            
             
         elif count =="2개":
             high = self.lineEdit_6.text()
@@ -204,7 +206,7 @@ class MyWindow(QMainWindow, form_class):
             self.lineEdit.clear()
             self.lineEdit_6.clear()
             self.lineEdit_7.clear()
-            self.lineEdit_9.clear()
+            
             
             
     #제거 버튼 눌렀을때 테이블에서 행삭제        
@@ -258,10 +260,11 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_rebuy_count'] = 0
             self.kiwoom.dic[self.stock_list[i][0] + '_buy_line'] = ""
             
-            
+            """
             self.get_hoga(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_hoga'] = self.kiwoom.hoga
             time.sleep(0.5)
+            """
             
             self.get_last_close(self.stock_list[i][4])
             self.kiwoom.dic[self.stock_list[i][0] + '_last_close'] = self.kiwoom.last_close 
@@ -273,7 +276,8 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status2'] = '초기상태'
         
         
-            self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0]  )
+            self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
+
 
         print(self.kiwoom.dic)
     
