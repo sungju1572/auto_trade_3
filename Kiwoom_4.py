@@ -252,6 +252,8 @@ class Kiwoom(QAxWidget):
         
         list_1 = [k for k in self.dic.keys() if name in k ]
         
+        self.ui.plainTextEdit.appendPlainText(" ")
+        
         
         print(gubun)
         print(self.get_chejan_data(9203))
