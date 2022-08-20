@@ -154,9 +154,37 @@ class MyWindow(QMainWindow, form_class):
     def check_stock(self):
         code = self.lineEdit.text()
         name = self.kiwoom.get_master_code_name(code)
-        count = self.comboBox_2.currentText()
+        #count = self.comboBox_2.currentText()
+        middle_line = self.lineEdit_4.text()
         
-        if count =="3개":
+        if middle_line == "":
+            high = self.lineEdit_3.text()
+            low = self.lineEdit_5.text()
+            middle = (float(high)+float(low))/2
+            price = self.lineEdit_9.text()
+            
+            
+            self.tableWidget_3.setRowCount(self.row_count+1)
+            self.tableWidget_3.setColumnCount(7)
+            self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(name))
+            self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(high))
+            self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(str(middle)))
+            self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(low))
+            self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(code))
+            self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(price))
+            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem("2개"))
+            self.row_count+=1
+            
+            self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            
+            self.lineEdit.clear()
+            self.lineEdit_3.clear()
+            self.lineEdit_4.clear()
+            self.lineEdit_5.clear()
+            
+            
+        
+        else:
             high = self.lineEdit_3.text()
             middle = self.lineEdit_4.text()
             low = self.lineEdit_5.text()
@@ -170,7 +198,7 @@ class MyWindow(QMainWindow, form_class):
             self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(low))
             self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(code))
             self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(price))
-            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem(count))
+            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem("3개"))
             self.row_count+=1
             
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
@@ -183,30 +211,7 @@ class MyWindow(QMainWindow, form_class):
             self.lineEdit_5.clear()
             
             
-        elif count =="2개":
-            high = self.lineEdit_6.text()
-            low = self.lineEdit_7.text()
-            middle = (float(high)+float(low))/2
-            price = self.lineEdit_9.text()
-            
-            
-            self.tableWidget_3.setRowCount(self.row_count+1)
-            self.tableWidget_3.setColumnCount(7)
-            self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(name))
-            self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(high))
-            self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(str(middle)))
-            self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(low))
-            self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(code))
-            self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(price))
-            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem(count))
-            self.row_count+=1
-            
-            self.plainTextEdit.appendPlainText("종목추가 : "+ name)
-            
-            self.lineEdit.clear()
-            self.lineEdit_6.clear()
-            self.lineEdit_7.clear()
-            
+
             
             
     #제거 버튼 눌렀을때 테이블에서 행삭제        
