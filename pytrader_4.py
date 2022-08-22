@@ -160,7 +160,7 @@ class MyWindow(QMainWindow, form_class):
         if middle_line == "":
             high = self.lineEdit_3.text()
             low = self.lineEdit_5.text()
-            middle = (float(high)+float(low))/2
+            middle = self.lineEdit_4.text()
             price = self.lineEdit_9.text()
             
             
@@ -219,11 +219,13 @@ class MyWindow(QMainWindow, form_class):
         select = self.tableWidget_3.selectedItems()
         for i in select:
             row = i.row()
+            
+            print(self.tableWidget_3.item(row, 0).text())
+    
             self.tableWidget_3.removeRow(row)
             self.row_count-=1
             self.plainTextEdit.appendPlainText("선택 종목삭제")
-        
-        
+
     #호가 받아오는 함수
     def get_hoga(self, trcode):
         self.kiwoom.set_input_value("종목코드", trcode)
