@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1237</width>
-    <height>963</height>
+    <width>1233</width>
+    <height>1028</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>580</y>
+      <y>650</y>
       <width>611</width>
       <height>351</height>
      </rect>
@@ -145,9 +145,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>290</y>
+      <y>310</y>
       <width>611</width>
-      <height>261</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="title">
@@ -201,6 +201,11 @@
      <column>
       <property name="text">
        <string>입력개수</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>화면번호</string>
       </property>
      </column>
     </widget>
@@ -271,7 +276,61 @@
       </font>
      </property>
      <property name="text">
-      <string>1.초기 입력 설정</string>
+      <string>1.내 종목 저장</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>491</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>1. 종목별로 기준선 입력 후 내 종목 저장 버튼 클릭 </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>280</y>
+       <width>491</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>2. 모든 종목 입력 후 거래 준비 버튼 클릭 (8시 45분 이후로 클릭)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>300</y>
+       <width>491</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>3. 오른쪽 내역에 모든 종목에 대해 거래완료 알림이 뜨면 거래 시작 버튼 클릭)</string>
      </property>
     </widget>
    </widget>
@@ -281,7 +340,7 @@
       <x>30</x>
       <y>10</y>
       <width>611</width>
-      <height>271</height>
+      <height>291</height>
      </rect>
     </property>
     <property name="title">
@@ -291,22 +350,27 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>140</y>
-       <width>161</width>
+       <y>120</y>
+       <width>571</width>
        <height>111</height>
       </rect>
      </property>
      <property name="title">
-      <string>3개</string>
+      <string>기준선 입력</string>
      </property>
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>20</y>
+        <x>20</x>
+        <y>30</y>
         <width>21</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>상</string>
@@ -315,11 +379,16 @@
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>50</y>
+        <x>200</x>
+        <y>30</y>
         <width>21</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>중</string>
@@ -328,21 +397,31 @@
      <widget class="QLineEdit" name="lineEdit_3">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>50</x>
         <y>20</y>
-        <width>111</width>
-        <height>21</height>
+        <width>131</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>80</y>
+        <x>380</x>
+        <y>30</y>
         <width>21</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>하</string>
@@ -351,21 +430,64 @@
      <widget class="QLineEdit" name="lineEdit_4">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>50</y>
-        <width>111</width>
-        <height>21</height>
+        <x>230</x>
+        <y>20</y>
+        <width>131</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_5">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>80</y>
-        <width>111</width>
-        <height>21</height>
+        <x>410</x>
+        <y>20</y>
+        <width>131</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_9">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>70</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>80</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>금액</string>
       </property>
      </widget>
     </widget>
@@ -373,9 +495,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>30</y>
-       <width>161</width>
-       <height>91</height>
+       <y>20</y>
+       <width>321</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="title">
@@ -384,11 +506,16 @@
      <widget class="QLineEdit" name="lineEdit_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>50</y>
-        <width>121</width>
-        <height>21</height>
+        <x>170</x>
+        <y>30</y>
+        <width>131</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(170, 255, 255);</string>
@@ -401,134 +528,24 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>20</y>
-        <width>121</width>
-        <height>21</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_7">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>140</y>
-       <width>151</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>2개</string>
-     </property>
-     <widget class="QLabel" name="label_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
         <y>30</y>
-        <width>21</width>
-        <height>16</height>
+        <width>131</width>
+        <height>31</height>
        </rect>
       </property>
-      <property name="text">
-       <string>상</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>30</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>70</y>
-        <width>21</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>하</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>70</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QComboBox" name="comboBox_2">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>60</y>
-       <width>61</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>3개</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2개</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QLabel" name="label_14">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>60</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>개수 선택</string>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_10">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>160</y>
-       <width>221</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>금액</string>
-     </property>
-     <widget class="QLineEdit" name="lineEdit_9">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>181</width>
-        <height>21</height>
-       </rect>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
      </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_9">
      <property name="geometry">
       <rect>
-       <x>330</x>
-       <y>30</y>
-       <width>261</width>
+       <x>350</x>
+       <y>20</y>
+       <width>241</width>
        <height>81</height>
       </rect>
      </property>
@@ -538,7 +555,7 @@
      <widget class="QComboBox" name="comboBox">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>80</x>
         <y>30</y>
         <width>141</width>
         <height>20</height>
@@ -548,7 +565,7 @@
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>30</y>
         <width>61</width>
         <height>21</height>
@@ -559,6 +576,42 @@
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>240</y>
+       <width>491</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>※ 기준선 3개일경우 상,중,하, 금액 입력</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>501</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>※ 기준선 2개일경우 상,하, 금액 입력 (중 입력부분은 빈칸으로 비워두기)</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -566,7 +619,7 @@
       <x>660</x>
       <y>10</y>
       <width>541</width>
-      <height>921</height>
+      <height>991</height>
      </rect>
     </property>
     <property name="title">
@@ -578,7 +631,7 @@
        <x>20</x>
        <y>40</y>
        <width>501</width>
-       <height>351</height>
+       <height>391</height>
       </rect>
      </property>
     </widget>
@@ -599,9 +652,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>440</y>
+       <y>480</y>
        <width>501</width>
-       <height>421</height>
+       <height>481</height>
       </rect>
      </property>
     </widget>
@@ -609,7 +662,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>410</y>
+       <y>440</y>
        <width>71</width>
        <height>21</height>
       </rect>
