@@ -55,6 +55,7 @@ class MyWindow(QMainWindow, form_class):
 
 
         self.row_count = 0 #tableWidget_3 에서 행 카운트하는용
+        self.window_count = 0 #tableWidget_3 화면번호 만드는용
         self.stock_list = [] #주시종목 담은 리스트
         self.stock_ticker_list = [] #주시종목 티커 리스트 
         self.account_number ="" #계좌
@@ -165,7 +166,7 @@ class MyWindow(QMainWindow, form_class):
             
             
             self.tableWidget_3.setRowCount(self.row_count+1)
-            self.tableWidget_3.setColumnCount(7)
+            self.tableWidget_3.setColumnCount(8)
             self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(name))
             self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(high))
             self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(str(middle)))
@@ -173,7 +174,9 @@ class MyWindow(QMainWindow, form_class):
             self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(code))
             self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(price))
             self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem("2개"))
+            self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
             self.row_count+=1
+            self.window_count+=1
             
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
             
@@ -191,7 +194,7 @@ class MyWindow(QMainWindow, form_class):
             price = self.lineEdit_9.text()
             
             self.tableWidget_3.setRowCount(self.row_count+1)
-            self.tableWidget_3.setColumnCount(7)
+            self.tableWidget_3.setColumnCount(8)
             self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(name))
             self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(high))
             self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(middle))
@@ -199,8 +202,9 @@ class MyWindow(QMainWindow, form_class):
             self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(code))
             self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(price))
             self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem("3개"))
+            self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
             self.row_count+=1
-            
+            self.window_count+=1
             self.plainTextEdit.appendPlainText("종목추가 : "+ name)
             #self.textEdit.append("종목추가 : "+ name)
             #self.textEdit.setTextColor("종목추가 : "+ name)
@@ -219,12 +223,18 @@ class MyWindow(QMainWindow, form_class):
         select = self.tableWidget_3.selectedItems()
         for i in select:
             row = i.row()
+        
             
-            print(self.tableWidget_3.item(row, 0).text())
-    
+            print(self.tableWidget_3.item(row,7).text())
+        
+            self.kiwoom.DisConnectRealData(str(self.tableWidget_3.item(row,7).text())) #만약 구독해있으면 구독해지
+            
             self.tableWidget_3.removeRow(row)
             self.row_count-=1
             self.plainTextEdit.appendPlainText("선택 종목삭제")
+            
+            
+            
 
     #호가 받아오는 함수
     def get_hoga(self, trcode):
@@ -244,7 +254,7 @@ class MyWindow(QMainWindow, form_class):
         init_list = []
         while init_num < self.row_count:
             sec_list = []
-            for i in range(7):
+            for i in range(8):
                 sec_list.append(self.tableWidget_3.item(init_num,i).text())
             init_list.append(sec_list)
             init_num += 1
@@ -299,12 +309,14 @@ class MyWindow(QMainWindow, form_class):
         for i in range(len(self.stock_list)):
             
             if i ==0:
-                self.kiwoom.SetRealReg("1000", self.stock_list[i][4], "20;10", "0")
+                self.kiwoom.SetRealReg(self.stock_list[i][7], self.stock_list[i][4], "20;10", "0")
                 self.stock_ticker_list.append(self.stock_list[i][4]) 
+                print(self.stock_list[i][7])
             else: 
-                self.kiwoom.SetRealReg("1000", self.stock_list[i][4], "20;10", "1")
+                self.kiwoom.SetRealReg(self.stock_list[i][7], self.stock_list[i][4], "20;10", "1")
                 self.stock_ticker_list.append(self.stock_list[i][4])
-            
+                print(self.stock_list[i][7])
+
 
 
 
