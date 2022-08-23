@@ -456,6 +456,7 @@ class Kiwoom(QAxWidget):
         buy_number = int(int(buy_total_price) / int(price)) #매수할 수량
         
 
+
         
         #초기상태
         if status == "초기상태":
