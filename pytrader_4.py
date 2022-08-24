@@ -61,6 +61,11 @@ class MyWindow(QMainWindow, form_class):
         self.account_number ="" #계좌
         self.take_profit = 0 #익절기준
         
+        self.pushButton_3.setDisabled(True)
+        self.pushButton_4.setDisabled(True)
+        self.pushButton_5.setDisabled(True)
+        
+        
         
         #self.lineEdit_8.textChanged.connect(self.profit_percent)# 익절 기준
         
@@ -72,6 +77,11 @@ class MyWindow(QMainWindow, form_class):
         code = self.lineEdit.text()
         name = self.kiwoom.get_master_code_name(code)
         self.lineEdit_2.setText(name)
+        if name != "":
+            self.pushButton_3.setEnabled(True)
+        else :
+            self.pushButton_3.setDisabled(True)
+            
         
     #서버연결
     def timeout(self):
@@ -159,10 +169,10 @@ class MyWindow(QMainWindow, form_class):
         middle_line = self.lineEdit_4.text()
         
         if middle_line == "":
-            high = self.lineEdit_3.text()
-            low = self.lineEdit_5.text()
+            high = format(int(self.lineEdit_3.text()), ",")
+            low = format(int(self.lineEdit_5.text()), ",")
             middle = self.lineEdit_4.text()
-            price = self.lineEdit_9.text()
+            price = format(int(self.lineEdit_9.text()), ",")
             
             
             self.tableWidget_3.setRowCount(self.row_count+1)
@@ -188,10 +198,11 @@ class MyWindow(QMainWindow, form_class):
             
         
         else:
-            high = self.lineEdit_3.text()
-            middle = self.lineEdit_4.text()
-            low = self.lineEdit_5.text()
-            price = self.lineEdit_9.text()
+
+            high = format(int(self.lineEdit_3.text()), ",")
+            middle = format(int(self.lineEdit_4.text()), ",")
+            low = format(int(self.lineEdit_5.text()), ",")
+            price = format(int(self.lineEdit_9.text()), ",")
             
             self.tableWidget_3.setRowCount(self.row_count+1)
             self.tableWidget_3.setColumnCount(8)
@@ -213,7 +224,9 @@ class MyWindow(QMainWindow, form_class):
             self.lineEdit_3.clear()
             self.lineEdit_4.clear()
             self.lineEdit_5.clear()
-            
+        
+        self.pushButton_4.setEnabled(True)
+
             
 
             
@@ -295,6 +308,7 @@ class MyWindow(QMainWindow, form_class):
         
             self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
 
+        self.pushButton_5.setEnabled(True)
 
         print(self.kiwoom.dic)
     
@@ -304,6 +318,7 @@ class MyWindow(QMainWindow, form_class):
         self.account_number = self.comboBox.currentText()
         self.stock_list = self.get_label()
         
+        self.plainTextEdit.appendPlainText("-------------거래 시작----------------")
 
         
         for i in range(len(self.stock_list)):
