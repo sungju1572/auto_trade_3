@@ -1106,7 +1106,8 @@ class Kiwoom(QAxWidget):
                 if abs(fluctuation_rate)+ compare >= 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "7도달상태" :
                     if abs(fluctuation_rate)+ compare >= 14:
@@ -1151,7 +1152,8 @@ class Kiwoom(QAxWidget):
                 if  compare >= 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "7도달상태" :
                     if compare >= 14:
@@ -1198,7 +1200,8 @@ class Kiwoom(QAxWidget):
                 if  compare >= 10 and sell_status_1 =="초기상태":
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1 ,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 10%도달 , 30%매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 10%도달 , 매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "10도달상태":
                     if compare >= 14 :
@@ -1235,7 +1238,8 @@ class Kiwoom(QAxWidget):
                 if compare >= 13 and sell_status_1 =="초기상태":
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 13%도달 , 50%매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 13%도달 , 매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "13도달상태":
                     if compare >= 20:
@@ -1905,12 +1909,15 @@ class Kiwoom(QAxWidget):
             
             
             #시가 등락률 0이상 7미만
-            if fluctuation_rate >= 0 and fluctuation_rate <7  :
+            if fluctuation_rate >= 0 and fluctuation_rate <7   :
                 if compare >= 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 30%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 7%도달(단주1매수상태) , 매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
                     self.ui.plainTextEdit.appendPlainText(" ")
+                
+                
                 elif sell_status_1 == "7도달상태" :
                     if compare >= 14:
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1 ,  0 ,"03", "" )
@@ -1944,7 +1951,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = ""
                         self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 3%도달(단주1매수상태) , 20%매도 | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1" )
                         self.ui.plainTextEdit.appendPlainText(" ")
-                    
+                   
                 else: 
                     self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중(단주1매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
          
@@ -1955,7 +1962,8 @@ class Kiwoom(QAxWidget):
                 if compare >= 10 and sell_status_1 =="초기상태":
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1 ,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 10%도달 , 30%매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 10%도달 , 매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "10도달상태":
                     if compare >= 14 :
@@ -1992,7 +2000,8 @@ class Kiwoom(QAxWidget):
                 if compare >= 13 and sell_status_1 =="초기상태":
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, 1,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
-                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 13%도달 , 50%매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "라인의 합 13%도달 , 매도(단주1매수상태) | 종목 : " + name + " 매도가격 :" + str(price) + " 매도수량 : 1")
                     self.ui.plainTextEdit.appendPlainText(" ")
                 elif sell_status_1 == "13도달상태":
                     if compare >= 20:
