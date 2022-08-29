@@ -1942,6 +1942,7 @@ class Kiwoom(QAxWidget):
                     self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중(단주1매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
             
             
+            
             #시가 등락률 0이상 7미만
             if fluctuation_rate >= 0 and fluctuation_rate <7   :
                 if compare >= 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
