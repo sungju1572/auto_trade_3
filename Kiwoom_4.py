@@ -442,6 +442,8 @@ class Kiwoom(QAxWidget):
         name = self.dic[list_1[list_1.index(name+'_name')]]                   #종목 이름
         buy_total_price = self.dic[list_1[list_1.index(name+'_buy_total')]]   #입력 총금액
         compare = self.dic[list_1[list_1.index(name+'_compare')]]             #현재가 전일대비
+        sec_percent = self.dic[list_1[list_1.index(name+'_sec_percent')]]     #재매수시 전일대비 가격 퍼센트
+        high_price = self.dic[list_1[list_1.index(name+'_high_price')]]       #각 시점의 최고 퍼센트
         
         
         if name+'_last_close' in list_1:
@@ -1940,7 +1942,6 @@ class Kiwoom(QAxWidget):
                     
                 else: 
                     self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중(단주1매수상태) | 종목 : " + name + " 시가등락률 :" + str(fluctuation_rate) + " 현재가등락률 : " + str(compare))
-            
             
             
             #시가 등락률 0이상 7미만
