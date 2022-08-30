@@ -304,6 +304,12 @@ class MyWindow(QMainWindow, form_class):
             #매도조건 상태 2가지
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status1'] = '초기상태'
             self.kiwoom.dic[self.stock_list[i][0] + '_sell_status2'] = '초기상태'
+            
+            #재매수시 비율
+            self.kiwoom.dic[self.stock_list[i][0] + '_sec_percent'] = 0
+            
+            #각 시점 최고가
+            self.kiwoom.dic[self.stock_list[i][0] + '_high_price'] = 0 
         
         
             self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
