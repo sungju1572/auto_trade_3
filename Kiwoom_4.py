@@ -580,7 +580,7 @@ class Kiwoom(QAxWidget):
                         
                         #### 여기부터 수정
                         
-                    if abs(fluctuation_rate)+ compare >= 14:
+                    if high_price >= 14:
                         per_count14 = int(round(buy_count * 0.5, 0))
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count14 ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = buy_count - per_count14  #남은 수량
