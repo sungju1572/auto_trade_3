@@ -321,6 +321,7 @@ class MyWindow(QMainWindow, form_class):
         print(self.kiwoom.dic)
     
 
+
     #거래시작 버튼눌렀을때 주시 종목별 구독
     def trade_start(self):
         self.account_number = self.comboBox.currentText()
