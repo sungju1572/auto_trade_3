@@ -824,7 +824,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태2"
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "2매도 | 하단선밑 1.6%지점 도달 : "+ name + " 매도가격 :" + format_price + " 매도수량 : " + str(rebuy_count ))
+                self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "2매도 | 하단선밑 1.8%지점 도달 : "+ name + " 매도가격 :" + format_price + " 매도수량 : " + str(rebuy_count ))
                 self.ui.plainTextEdit.appendPlainText(" ")
             
                 
@@ -1625,7 +1625,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태2"
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "2매도 | 하단선밑 1.6%지점 도달 : "+ name + " 매도가격 :" + format_price + " 매도수량 : " + str(rebuy_count ))
+                self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "2매도 | 하단선밑 1.8%지점 도달 : "+ name + " 매도가격 :" + format_price + " 매도수량 : " + str(rebuy_count ))
                 self.ui.plainTextEdit.appendPlainText(" ")
             
                 
