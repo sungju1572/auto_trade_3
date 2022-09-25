@@ -785,7 +785,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
                 elif sell_status_1 == "14도달상태":
-                    if compare >= (sec_percent+14):
+                    if compare >= (sec_percent+13):
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
@@ -1153,7 +1153,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
                 elif sell_status_1 == "14도달상태":
-                    if compare >= (sec_percent+14):
+                    if compare >= (sec_percent+13):
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = 0  #남은 수량
@@ -1775,7 +1775,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                 
                 elif sell_status_1 == "14도달상태":
-                    if compare >= (sec_percent+14):
+                    if compare >= (sec_percent+13):
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
@@ -2102,7 +2102,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
                 elif sell_status_1 == "14도달상태":
-                    if compare >= (sec_percent+14):
+                    if compare >= (sec_percent+13):
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = 0  #남은 수량
