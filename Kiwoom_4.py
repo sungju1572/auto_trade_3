@@ -600,7 +600,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
                     else: 
-                        self.ui.plainTextEdit_2.appendPlainText("7%도달 대기중 | 종목 : " + name + str(abs(sec_percent)+ compare))
+                        self.ui.plainTextEdit_2.appendPlainText("7%도달 대기중 | 종목 : " + name + " " + str(abs(sec_percent)+ compare))
               
            
                 elif sell_status_1 == "7도달상태" :
@@ -627,7 +627,7 @@ class Kiwoom(QAxWidget):
                         self.ui.plainTextEdit.appendPlainText(" ")
                         
                     else: 
-                        self.ui.plainTextEdit_2.appendPlainText("7%도달 상태 | 종목 : " + name + str(abs(sec_percent)+ compare))
+                        self.ui.plainTextEdit_2.appendPlainText("7%도달 상태 | 종목 : " + name +" " +  str(abs(sec_percent)+ compare))
                         
                     
                 elif sell_status_1 == "14도달상태":
@@ -655,7 +655,7 @@ class Kiwoom(QAxWidget):
                         self.ui.plainTextEdit.appendPlainText(" ")
                         
                     else: 
-                        self.ui.plainTextEdit_2.appendPlainText("14%도달 상태 | 종목 : " + name + str(abs(sec_percent)+ compare))
+                        self.ui.plainTextEdit_2.appendPlainText("14%도달 상태 | 종목 : " + name +" " +  str(abs(sec_percent)+ compare))
                 
                 elif sell_status_1 == "5도달상태":
                     if abs(sec_percent)+ compare >= 7 :
@@ -680,25 +680,26 @@ class Kiwoom(QAxWidget):
                         self.ui.plainTextEdit.appendPlainText(" ")
                     
                     else: 
-                        self.ui.plainTextEdit_2.appendPlainText("5%도달 상태 | 종목 : " + name + str(abs(sec_percent)+ compare))
+                        self.ui.plainTextEdit_2.appendPlainText("5%도달 상태 | 종목 : " + name + " " + str(abs(sec_percent)+ compare))
            
                 
 
             #시가 등락률 0이상 7미만
             if sec_percent >= 0 and sec_percent < 7 :
-                
-                if sell_status_1 =="초기상태" :
-
-                             
+                if sell_status_1 =="초기상태" :   
                     if compare >= 7 and sell_status_1 =="초기상태" : #기준봉매매 라인의 합이 7% 되었을 때)
                         per_count7 = int(round(buy_count * 0.3, 0))
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, per_count7,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = buy_count - per_count7 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 7% 도달 : "+ name + " 매도가격 :" + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(per_count7))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (가) 매도 | "+ name +" | 7% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 30% " + str(per_count7) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
+                        
+                    else: 
+                        self.ui.plainTextEdit_2.appendPlainText("7%도달 대기중 | 종목 : " + name +" " +  str(compare))
 
 
                 elif sell_status_1 == "7도달상태" :
@@ -709,7 +710,8 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = buy_count - per_count14  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 14% 도달 : "+ name + " 매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : " + str(per_count14))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (나) 매도 | "+ name +" | 14% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 50% " + str(per_count14) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                     
@@ -719,19 +721,23 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = buy_count - per_count5  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 5% 도달  | 종목 : " + name + " 매도가격 :"  + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(per_count5))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (나) 매도 | "+ name +" | 5% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 50% " + str(per_count5) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
+                        
+                    else: 
+                        self.ui.plainTextEdit_2.appendPlainText("7%도달 상태 | 종목 : " + name + " " + str(compare))
    
                         
                 elif sell_status_1 == "14도달상태":
-        
                     if compare >= 20 :
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 20% 도달 : "+ name + " 매도가격 :" + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(buy_count))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (다) 매도 | "+ name +" | 20% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 20% " + str(buy_count) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
@@ -741,8 +747,12 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 10% 도달 | 종목 : " + name + " 매도가격 :" + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(buy_count))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (다) 매도 | "+ name +" | 10% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 20% " + str(buy_count) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
+                        
+                    else: 
+                        self.ui.plainTextEdit_2.appendPlainText("14%도달 상태 | 종목 : " + name + " " + str(compare))
                         
                 elif sell_status_1 == "5도달상태":
                     if compare >= 7 :
@@ -751,7 +761,8 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 7% 도달 : "+ name + " 매도가격 :" + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(buy_count))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (다) 매도 | "+ name +" | 7% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 20% " + str(buy_count) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
                         self.dic[list_1[list_1.index(name+'_high_price')]] = 0
                         
@@ -761,13 +772,14 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_buy_count')]] = 0  #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + "1매도 | 3% 도달 | 종목 : " + name + " 매도가격 :" + format_price + " 원 " + str(compare )   + " 매도수량 : " + str(buy_count))
+                        self.ui.plainTextEdit.appendPlainText("->시간 : " + str(time) + " | " + " (다) 매도 | "+ name +" | 3% 도달 ")
+                        self.ui.plainTextEdit.appendPlainText("매도가격 :" + format_price + " 원 " + str( compare )   + " 매도수량 : 20% " + str(buy_count) + "주")
                         self.ui.plainTextEdit.appendPlainText(" ")
+                        
+                    else: 
+                        self.ui.plainTextEdit_2.appendPlainText("5%도달 상태 | 종목 : " + name + " " + str(compare))
                     
                
-                    
-                else: 
-                    self.ui.plainTextEdit_2.appendPlainText("시가 등락률 7% 미만, 7%도달 대기중 | 종목 : " + name + " 시가등락률 :" + str(sec_percent) + " 현재가등락률 : " + str(compare))
             #시가등락률 7이상 10미만    
             elif sec_percent >= 7 and sec_percent < 10 :
                 
