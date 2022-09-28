@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 import time as t
 import pandas as pd
 import sqlite3
