@@ -137,7 +137,7 @@ class Kiwoom(QAxWidget):
         if real_type == "주식체결":
             time =  self.get_comm_real_data(trcode, 20)
             #date = datetime.datetime.now().strftime("%Y-%m-%d ")
-            #time =  datetime.datetime.strptime(date + time, "%Y-%m-%d %H%M%S")
+            time =  datetime.datetime.strptime(time, "%Y-%m-%d %H%M%S")
             #print("체결시간 :", time)
 
 
