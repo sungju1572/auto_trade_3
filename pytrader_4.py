@@ -5,9 +5,10 @@ from PyQt5 import uic
 from Kiwoom_4 import *
 import time
 from os import environ
+from PyQt5.QtGui import *
 
 
-form_class = uic.loadUiType("exam.ui")[0]
+form_class = uic.loadUiType("exam_2.ui")[0]
 
 
 #해상도 고정 함수 추가
@@ -188,7 +189,11 @@ class MyWindow(QMainWindow, form_class):
             self.row_count+=1
             self.window_count+=1
             
-            self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            #self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            self.textEdit.append("종목추가 : "+ name)       
+            
+
+            
             
             self.lineEdit.clear()
             self.lineEdit_3.clear()
@@ -216,7 +221,8 @@ class MyWindow(QMainWindow, form_class):
             self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
             self.row_count+=1
             self.window_count+=1
-            self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            #self.plainTextEdit.appendPlainText("종목추가 : "+ name)
+            self.textEdit.append("종목추가 : "+ name)
             #self.textEdit.append("종목추가 : "+ name)
             #self.textEdit.setTextColor("종목추가 : "+ name)
             
@@ -244,7 +250,8 @@ class MyWindow(QMainWindow, form_class):
             
             self.tableWidget_3.removeRow(row)
             self.row_count-=1
-            self.plainTextEdit.appendPlainText("선택 종목삭제")
+            #self.plainTextEdit.appendPlainText("선택 종목삭제")
+            self.textEdit.append("선택 종목삭제")
             
             
             
@@ -314,7 +321,8 @@ class MyWindow(QMainWindow, form_class):
             self.kiwoom.dic[self.stock_list[i][0] + '_high_price'] = 0 
         
         
-            self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
+            #self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
+            self.textEdit.append("거래준비완료 | 종목 :" + self.stock_list[i][0])
 
         self.pushButton_5.setEnabled(True)
 
@@ -327,8 +335,8 @@ class MyWindow(QMainWindow, form_class):
         self.account_number = self.comboBox.currentText()
         self.stock_list = self.get_label()
         
-        self.plainTextEdit.appendPlainText("-------------거래 시작----------------")
-
+        #self.plainTextEdit.appendPlainText("-------------거래 시작----------------")
+        self.textEdit.append("-------------거래 시작----------------")
         
         for i in range(len(self.stock_list)):
             
