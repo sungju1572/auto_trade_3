@@ -6,6 +6,7 @@ from Kiwoom_4 import *
 import time
 from os import environ
 from PyQt5.QtGui import *
+import openpyxl as op
 
 
 form_class = uic.loadUiType("exam_2.ui")[0]
@@ -65,6 +66,11 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_3.setDisabled(True)
         self.pushButton_4.setDisabled(True)
         self.pushButton_5.setDisabled(True)
+        self.fileSave.setDisa(True)
+        
+        #엑셀 불러오는 버튼
+        self.fileSelect.clicked.connect(self.selectFunction)
+
         
         
         
@@ -160,8 +166,29 @@ class MyWindow(QMainWindow, form_class):
 
         self.tableWidget_2.resizeRowsToContents()
         
-    
+     #selectFunction 메서드 정의
+    def selectFunction(self):
+        #filePath 출력하는 부분 초기화
+        self.filePath.clear()
+        #comboBox 출력하는 부분 초기화
+        self.comboBox.clear()
+        #선택한 엑셀 파일 경로를 받아옴 : 튜플 타입으로 받아오며 0번재 요소가 주소값 string이다.
+        path = QFileDialog.getOpenFileName(self, 'Open File', '', 'All File(*);; xlsx File(*.xlsx)')
+        #filePath에 현재 읽어온 엑셀 파일 경로를 입력한다.(절대경로)
+        self.filePath.setText(path[0])
+
+        #위 절대 경로 활용해 openpyxl workbook 객체 생성
+        wb = op.load_workbook(path[0])
+        #설정한 workbook의 시트리스트를 읽어온다.
+        self.shtlist = wb.sheetnames
+        print(self.shtlist)
         
+        #시트리스트를 반복문으로 진행
+        for sht in self.shtlist:
+            #콤보박스의 addItem을 사용하여 항목 추가(addItem의 요소는 문자열 타입)
+            self.comboBox.addItem(sht)
+     
+
     #주시 종목에 설정한 종목 넣기
     def check_stock(self):
         code = self.lineEdit.text()
