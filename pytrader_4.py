@@ -66,10 +66,12 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_3.setDisabled(True)
         self.pushButton_4.setDisabled(True)
         self.pushButton_5.setDisabled(True)
-        self.fileSave.setDisa(True)
+        self.fileSave.setDisabled(True)
         
         #엑셀 불러오는 버튼
         self.fileSelect.clicked.connect(self.selectFunction)
+        #엑셀 파일 주시종목 저장하는 버튼
+        self.fileSave.clicked.connect(self.fileSaveFunction)
 
         
         
@@ -170,8 +172,7 @@ class MyWindow(QMainWindow, form_class):
     def selectFunction(self):
         #filePath 출력하는 부분 초기화
         self.filePath.clear()
-        #comboBox 출력하는 부분 초기화
-        self.comboBox.clear()
+
         #선택한 엑셀 파일 경로를 받아옴 : 튜플 타입으로 받아오며 0번재 요소가 주소값 string이다.
         path = QFileDialog.getOpenFileName(self, 'Open File', '', 'All File(*);; xlsx File(*.xlsx)')
         #filePath에 현재 읽어온 엑셀 파일 경로를 입력한다.(절대경로)
@@ -184,10 +185,64 @@ class MyWindow(QMainWindow, form_class):
         print(self.shtlist)
         
         #시트리스트를 반복문으로 진행
-        for sht in self.shtlist:
-            #콤보박스의 addItem을 사용하여 항목 추가(addItem의 요소는 문자열 타입)
-            self.comboBox.addItem(sht)
-     
+            
+        if self.filePath.text() != "":
+            self.fileSave.setEnabled(True)
+            
+            
+    #엑셀함수 주시종목에 넣기
+    def fileSaveFunction(self):
+        filePath = self.filePath.text()
+        wb = op.load_workbook(filename = filePath )
+        
+        ws = wb.get_sheet_by_name(wb.get_sheet_names()[0])
+        
+        
+        for row in range(2,ws.max_row+1):
+            row_list_1 = []
+            row_dic = {}
+            for col in range(1,ws.max_column+1):
+                row_list_1.append(str(ws.cell(row= row, column= col).value))
+        
+            
+            row_dic['종목이름'] = self.kiwoom.get_master_code_name(row_list_1[0].zfill(6))
+            row_dic['상단선'] = row_list_1[1]
+            row_dic['하단선'] = row_list_1[3]
+            row_dic['금액'] = row_list_1[4]
+            row_dic['티커'] = row_list_1[0]
+        
+            if row_list_1[2] ==None:
+                row_dic['입력개수'] = "2개"
+                row_dic['중단선'] = ""
+            else:
+                row_dic['입력개수'] = "3개"
+                row_dic['중단선'] = row_list_1[2]
+                
+                
+            self.tableWidget_3.setRowCount(self.row_count+1)
+            self.tableWidget_3.setColumnCount(8)
+            self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(row_dic['종목이름']))
+            self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(row_dic['상단선']))
+            self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(row_dic['중단선']))
+            self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(row_dic['하단선']))
+            self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(row_dic['티커']))
+            self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(row_dic['금액']))
+            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem(row_dic['입력개수']))
+            self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
+            self.row_count+=1
+            self.window_count+=1
+            
+            
+            self.textEdit.append("종목추가 : "+ row_dic['종목이름'])
+            
+            
+                
+      
+
+
+        #for row in ws.rows:
+         #   for val in row:
+          #      print(val.value)
 
     #주시 종목에 설정한 종목 넣기
     def check_stock(self):
