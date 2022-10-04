@@ -136,12 +136,13 @@ class Kiwoom(QAxWidget):
         # 체결 시간 
         if real_type == "주식체결":
             time =  self.get_comm_real_data(trcode, 20)
-            date = datetime.datetime.now().strftime("%Y-%m-%d ")
-            time = datetime.datetime.strptime(time, "%Y-%m-%d %H%M%S")
-            time = time[-8:]
+            #date = datetime.datetime.now().strftime("%Y-%m-%d ")
+            #time = datetime.datetime.strptime(time, "%H:%M:%S")
+            time = time[:2] + ":" + time[2:4] + ":" + time[4:6]
 
             
-            #print("체결시간 :", time)
+            
+            print("체결시간 :", time)
 
 
         #전일대비
@@ -563,7 +564,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -586,7 +587,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -609,7 +610,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -631,7 +632,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")   
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -653,7 +654,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")      
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -669,7 +670,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")   
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -691,7 +692,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -707,7 +708,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")   
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -727,7 +728,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")   
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -743,7 +744,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")   
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -766,7 +767,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -788,7 +789,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -804,7 +805,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -825,7 +826,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -841,7 +842,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -861,7 +862,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -877,7 +878,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")  
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -901,7 +902,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count10 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -921,7 +922,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -942,7 +943,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -969,7 +970,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count13  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -992,7 +993,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1099,7 +1100,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1121,7 +1122,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태2"
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1142,7 +1143,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태2"
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1165,7 +1166,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1188,7 +1189,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1204,7 +1205,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1226,7 +1227,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1243,7 +1244,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1263,7 +1264,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1280,7 +1281,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1307,7 +1308,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1329,7 +1330,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1345,7 +1346,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1365,7 +1366,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1381,7 +1382,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1401,7 +1402,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1417,7 +1418,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1440,7 +1441,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count10 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1461,7 +1462,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1481,7 +1482,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1506,7 +1507,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count13  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1528,7 +1529,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1970,7 +1971,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1991,7 +1992,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2014,7 +2015,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2035,7 +2036,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2051,7 +2052,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2071,7 +2072,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2087,7 +2088,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2106,7 +2107,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2122,7 +2123,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2145,7 +2146,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2168,7 +2169,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2184,7 +2185,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2205,7 +2206,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2221,7 +2222,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2242,7 +2243,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2258,7 +2259,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2282,7 +2283,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count10 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2305,7 +2306,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2326,7 +2327,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2349,7 +2350,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count13  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2373,7 +2374,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  buy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2465,7 +2466,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2487,7 +2488,7 @@ class Kiwoom(QAxWidget):
                 self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태2"
                 self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                 self.ui.textEdit.setFontPointSize(13)
-                self.ui.textEdit.setTextColor(QColor(255,0,0))
+                self.ui.textEdit.setTextColor(QColor(0,0,255))
                 self.ui.textEdit.append("매도")
                 self.ui.textEdit.setFontPointSize(9)
                 self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2508,7 +2509,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2529,7 +2530,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2545,7 +2546,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2568,7 +2569,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2584,7 +2585,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2604,7 +2605,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2620,7 +2621,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2645,7 +2646,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count7 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "7도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2667,7 +2668,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2683,7 +2684,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count5*price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "5도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2704,7 +2705,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2720,7 +2721,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2739,7 +2740,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2755,7 +2756,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2778,7 +2779,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count10 *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "10도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2800,7 +2801,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count14  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "14도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2822,7 +2823,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2846,7 +2847,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count13  *price  #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "13도달상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2870,7 +2871,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  rebuy_count *price #남은 잔고 
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
                         self.ui.textEdit.setFontPointSize(13)
-                        self.ui.textEdit.setTextColor(QColor(255,0,0))
+                        self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도")
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
