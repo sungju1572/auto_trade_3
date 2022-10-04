@@ -197,6 +197,7 @@ class MyWindow(QMainWindow, form_class):
         
         ws = wb.get_sheet_by_name(wb.get_sheet_names()[0])
         
+        print(ws.max_row+1)
         
         for row in range(2,ws.max_row+1):
             row_list_1 = []
@@ -206,44 +207,37 @@ class MyWindow(QMainWindow, form_class):
         
             
             row_dic['종목이름'] = self.kiwoom.get_master_code_name(row_list_1[0].zfill(6))
-            row_dic['상단선'] = row_list_1[1]
-            row_dic['하단선'] = row_list_1[3]
-            row_dic['금액'] = row_list_1[4]
-            row_dic['티커'] = row_list_1[0]
-            
-            print(row_list_1)
+            row_dic['상단선'] = format(int(row_list_1[1]), ",")
+            row_dic['하단선'] = format(int(row_list_1[3]), ",")
+            row_dic['금액'] = format(int(row_list_1[4]), ",")
+            row_dic['티커'] = row_list_1[0].zfill(6)
+
         
             if row_list_1[2] =="None":
                 row_dic['입력개수'] = "2개"
                 row_dic['중단선'] = ""
             else:
                 row_dic['입력개수'] = "3개"
-                row_dic['중단선'] = row_list_1[2]
+                row_dic['중단선'] = format(int(row_list_1[2]), ",")
                 
-            if row_dic['종목이름'] == "":
-                self.textEdit.append("종목티커 오류 : "+ row_dic['티커'] +" " +" " + str(row)+ "번째 행")
             
-            elif int(row_dic['상단선']) <= int(row_dic['하단선']):
-                self.textEdit.append("하단선이 상단선보다 높음 : " + str(row)+ "번째 행")
+            self.tableWidget_3.setRowCount(self.row_count+1)
+            self.tableWidget_3.setColumnCount(8)
+            self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(row_dic['종목이름']))
+            self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(row_dic['상단선']))
+            self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(row_dic['중단선']))
+            self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(row_dic['하단선']))
+            self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(row_dic['티커']))
+            self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(row_dic['금액']))
+            self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem(row_dic['입력개수']))
+            self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
+            self.row_count+=1
+            self.window_count+=1
                     
                     
-            else:
-            
-                self.tableWidget_3.setRowCount(self.row_count+1)
-                self.tableWidget_3.setColumnCount(8)
-                self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(row_dic['종목이름']))
-                self.tableWidget_3.setItem(self.row_count,1,QTableWidgetItem(row_dic['상단선']))
-                self.tableWidget_3.setItem(self.row_count,2,QTableWidgetItem(row_dic['중단선']))
-                self.tableWidget_3.setItem(self.row_count,3,QTableWidgetItem(row_dic['하단선']))
-                self.tableWidget_3.setItem(self.row_count,4,QTableWidgetItem(row_dic['티커']))
-                self.tableWidget_3.setItem(self.row_count,5,QTableWidgetItem(row_dic['금액']))
-                self.tableWidget_3.setItem(self.row_count,6,QTableWidgetItem(row_dic['입력개수']))
-                self.tableWidget_3.setItem(self.row_count,7,QTableWidgetItem(str(1000+self.window_count)))
-                self.row_count+=1
-                self.window_count+=1
-                    
-                    
-                self.textEdit.append("종목추가 : "+ row_dic['종목이름'])
+            self.textEdit.append("종목추가 : "+ row_dic['종목이름'])
+                
+            self.pushButton_4.setEnabled(True)
                     
                 
             
