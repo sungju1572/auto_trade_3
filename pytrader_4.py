@@ -203,14 +203,19 @@ class MyWindow(QMainWindow, form_class):
             row_list_1 = []
             row_dic = {}
             for col in range(1,ws.max_column+1):
-                row_list_1.append(str(ws.cell(row= row, column= col).value))
+                    row_list_1.append(str(ws.cell(row= row, column= col).value))
+    
         
-            
-            row_dic['종목이름'] = self.kiwoom.get_master_code_name(row_list_1[0].zfill(6))
-            row_dic['상단선'] = format(int(row_list_1[1]), ",")
-            row_dic['하단선'] = format(int(row_list_1[3]), ",")
-            row_dic['금액'] = format(int(row_list_1[4]), ",")
-            row_dic['티커'] = row_list_1[0].zfill(6)
+            if row_list_1[0] != "None":
+                row_dic['종목이름'] = self.kiwoom.get_master_code_name(row_list_1[0].zfill(6))
+            if row_list_1[1] != "None":
+                row_dic['상단선'] = format(int(row_list_1[1]), ",")
+            if row_list_1[3] != "None":
+                row_dic['하단선'] = format(int(row_list_1[3]), ",")
+            if row_list_1[4] != "None":
+                row_dic['금액'] = format(int(row_list_1[4]), ",")
+            if row_list_1[0] != "None":
+                row_dic['티커'] = row_list_1[0].zfill(6)
 
         
             if row_list_1[2] =="None":
@@ -219,6 +224,14 @@ class MyWindow(QMainWindow, form_class):
             else:
                 row_dic['입력개수'] = "3개"
                 row_dic['중단선'] = format(int(row_list_1[2]), ",")
+            
+            #빈칸 있을때 for문 넘기기
+            if row_list_1[0] == "None":
+                    continue
+                    
+            
+                    
+                
                 
             
             self.tableWidget_3.setRowCount(self.row_count+1)
