@@ -205,7 +205,13 @@ class MyWindow(QMainWindow, form_class):
             for col in range(1,ws.max_column+1):
                     row_list_1.append(str(ws.cell(row= row, column= col).value))
     
-        
+                            
+            #빈칸 있을때 for문 넘기기
+            if row_list_1[0] == "None":
+                    continue
+                      
+    
+    
             if row_list_1[0] != "None":
                 row_dic['종목이름'] = self.kiwoom.get_master_code_name(row_list_1[0].zfill(6))
             if row_list_1[1] != "None":
@@ -217,23 +223,33 @@ class MyWindow(QMainWindow, form_class):
             if row_list_1[0] != "None":
                 row_dic['티커'] = row_list_1[0].zfill(6)
 
-        
+
+            
+
             if row_list_1[2] =="None":
                 row_dic['입력개수'] = "2개"
                 row_dic['중단선'] = ""
+                if row_dic["상단선"] <= row_dic["하단선"]:
+                    self.textEdit.append("상단선이 하단선보다 작거나 같음 : "+ row_dic["종목이름"])
+                    continue
+                
             else:
                 row_dic['입력개수'] = "3개"
                 row_dic['중단선'] = format(int(row_list_1[2]), ",")
-            
-            #빈칸 있을때 for문 넘기기
-            if row_list_1[0] == "None":
+                
+                if row_dic["상단선"] <= row_dic["중단선"]:
+                    self.textEdit.append("상단선이 중단선보다 작거나 같음 : "+ row_dic["종목이름"])
                     continue
-                    
-            
-                    
+                elif row_dic["중단선"] <= row_dic["하단선"]:
+                    self.textEdit.append("중단선이 하단선보다 작거나 같음 : "+ row_dic["종목이름"])
+                    continue
                 
-                
             
+            
+       
+            
+            
+                
             self.tableWidget_3.setRowCount(self.row_count+1)
             self.tableWidget_3.setColumnCount(8)
             self.tableWidget_3.setItem(self.row_count,0,QTableWidgetItem(row_dic['종목이름']))
@@ -416,6 +432,9 @@ class MyWindow(QMainWindow, form_class):
         
             #self.plainTextEdit.appendPlainText("거래준비완료 | 종목 :" + self.stock_list[i][0] )
             self.textEdit.append("거래준비완료 | 종목 :" + self.stock_list[i][0])
+            
+            #2%도달 여부(1매수용) (0도달x / 1 도달o )
+            self.kiwoom.dic[self.stock_list[i][0] + '_reach_two_per'] = 0 
 
         self.pushButton_5.setEnabled(True)
 
