@@ -436,6 +436,10 @@ class MyWindow(QMainWindow, form_class):
             #2%도달 여부(1매수용) (0도달x / 1 도달o )
             self.kiwoom.dic[self.stock_list[i][0] + '_reach_two_per'] = 0 
 
+            
+            #2%도달 여부(2매수용) (0도달x / 1 도달o )
+            self.kiwoom.dic[self.stock_list[i][0] + '_reach_two_per2'] = 0 
+
         self.pushButton_5.setEnabled(True)
 
         print(self.kiwoom.dic)
