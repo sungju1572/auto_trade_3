@@ -679,7 +679,7 @@ class Kiwoom(QAxWidget):
             #시가등락률 0미만
             if sec_percent < 0 :
                 if sell_status_1 =="초기상태" : 
-                    if abs(sec_percent)+ compare >= fluctuation_rate + 2 and reach_two_per == 0 :
+                    if compare >= fluctuation_rate + 2 and reach_two_per == 0 :
                         self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 1
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -1908,7 +1908,7 @@ class Kiwoom(QAxWidget):
             if sec_percent < 0 :
                 
                 if sell_status_1 =="초기상태" : 
-                    if abs(sec_percent)+ compare >= sec_percent + 2 and reach_two_per == 0 :
+                    if compare >= fluctuation_rate + 2 and reach_two_per == 0 :
                         self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 1
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2047,7 +2047,7 @@ class Kiwoom(QAxWidget):
             if sec_percent >= 0 and sec_percent < 7 :
                 
                 if sell_status_1 =="초기상태" :        
-                    if compare >= sec_percent + 2 and reach_two_per == 0 :
+                    if compare >= fluctuation_rate + 2 and reach_two_per == 0 :
                         self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 1
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2192,7 +2192,7 @@ class Kiwoom(QAxWidget):
                 
                 if sell_status_1 =="초기상태":
                     
-                    if compare >= (sec_percent+2) and reach_two_per == 0 :
+                    if compare >= (fluctuation_rate+2) and reach_two_per == 0 :
                         self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 1
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
@@ -2266,7 +2266,7 @@ class Kiwoom(QAxWidget):
             elif sec_percent >=10 and sec_percent < 20:
                 #13%도달
                 if sell_status_1 =="초기상태":
-                    if compare >= (sec_percent+2) and reach_two_per == 0 :
+                    if compare >= (fluctuation_rate+2) and reach_two_per == 0 :
                         self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 1
                         self.ui.textEdit.setFontPointSize(9)
                         self.ui.textEdit.setTextColor(QColor(0,0,0))
