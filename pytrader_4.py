@@ -331,7 +331,7 @@ class MyWindow(QMainWindow, form_class):
             self.row_count+=1
             self.window_count+=1
             #self.plainTextEdit.appendPlainText("종목추가 : "+ name)
-            self.textEdit.append("종목추가 : "+ name)
+            self.textEdit.append("■ 종목추가 : "+ name)
             #self.textEdit.append("종목추가 : "+ name)
             #self.textEdit.setTextColor("종목추가 : "+ name)
             
