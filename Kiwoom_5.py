@@ -714,6 +714,19 @@ class Kiwoom(QAxWidget):
                     self.ui.textEdit.append(" ")
                     
             elif reach_two_per == 3 :
+                if compare <= sec_percent + 3 :
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
+                    self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
+                    self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
+                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                    self.ui.textEdit.setFontPointSize(13)
+                    self.ui.textEdit.setTextColor(QColor(0,0,255))
+                    self.ui.textEdit.append("매도 ■ : 3% 익절구간 하락")
+                    self.ui.textEdit.setFontPointSize(9)
+                    self.ui.textEdit.setTextColor(QColor(0,0,0))
+                    self.ui.textEdit.append("->시간 : " + str(time) + " | " + "1매수가 매도 | "+ name + " | 상단선 도달")
+                    self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 50% " + str(buy_count) + "주")
+                    self.ui.textEdit.append(" ")
                 
 
             #매도 조건 만들기
@@ -755,6 +768,10 @@ class Kiwoom(QAxWidget):
               
                             
                 elif sell_status_1 == "3도달상태":
+                    if compare > sec_percent + 3 and reach_two_per2 == 2 :
+                        self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                        
+                    
                     if compare >= sec_percent + 7:
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
@@ -1133,6 +1150,7 @@ class Kiwoom(QAxWidget):
                         self.ui.textEdit.append("->시간 : " + str(time) + " | " + "2매도 | "+ name + " | 상단선 도달")
                         self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 50% " + str(per_count50) + "주")
                         self.ui.textEdit.append(" ")
+                        
 
                 
                 
@@ -1184,6 +1202,21 @@ class Kiwoom(QAxWidget):
                         self.ui.textEdit.append("->시간 : " + str(time) + " | " + "2매도 | "+ name + " | 상단선 도달")
                         self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 100% " + str(rebuy_count) + "주")
                         self.ui.textEdit.append(" ")
+                        
+            elif reach_two_per2 == 3:
+                if compare < sec_percent + 3 :
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
+                    self.ui.textEdit.setFontPointSize(13)
+                    self.ui.textEdit.setTextColor(QColor(0,0,255))
+                    self.ui.textEdit.append("매도 ■ : 3% 익절구간 하락")
+                    self.ui.textEdit.setFontPointSize(9)
+                    self.ui.textEdit.setTextColor(QColor(0,0,0))
+                    self.ui.textEdit.append("->시간 : " + str(time) + " | " + "2매도 | "+ name + " | 상단선 도달")
+                    self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 50% " + str(rebuy_count) + "주")
+                    self.ui.textEdit.append(" ")
+                    
 
             
             #매도 조건 만들기
@@ -1226,6 +1259,8 @@ class Kiwoom(QAxWidget):
   
                         
                 elif sell_status_1 == "3도달상태":
+                    if compare > sec_percent + 3 and reach_two_per2 == 2:
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
       
                     if compare >= sec_percent + 7 :
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
@@ -1637,7 +1672,24 @@ class Kiwoom(QAxWidget):
                     self.ui.textEdit.append("->시간 : " + str(time) + " | " + "1매수가 매도 | "+ name + " | 상단선 도달")
                     self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 100% " + str(buy_count) + "주")
                     self.ui.textEdit.append(" ")
+                    
 
+            elif reach_two_per == 3 :
+                if compare < sec_percent + 3:
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태"
+                    self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
+                    self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
+                    self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
+                    self.ui.textEdit.setFontPointSize(13)
+                    self.ui.textEdit.setTextColor(QColor(0,0,255))
+                    self.ui.textEdit.append("매도 ■ : 3% 익절구간 하락")
+                    self.ui.textEdit.setFontPointSize(9)
+                    self.ui.textEdit.setTextColor(QColor(0,0,0))
+                    self.ui.textEdit.append("->시간 : " + str(time) + " | " + "1매수가 매도 | "+ name + " | 상단선 도달")
+                    self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 50% " + str(buy_count) + "주")
+                    self.ui.textEdit.append(" ")
+                    
         
                      
             #매도 조건 만들기
@@ -1679,6 +1731,10 @@ class Kiwoom(QAxWidget):
               
                             
                 elif sell_status_1 == "3도달상태":
+                    if compare > sec_percent + 3 and reach_two_per2 == 2 :
+                        self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+
+                    
                     if compare >= sec_percent + 7:
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
@@ -1789,7 +1845,7 @@ class Kiwoom(QAxWidget):
                     else: 
                         self.ui.textEdit_2.append("7%익절구간 도달 상태 | 종목 : " + name + " " + str(compare))
                         
-                 elif sell_status_1 == "50익절상태":
+                elif sell_status_1 == "50익절상태":
                     #하단선 밑 1.8%
                     if price <= low - 0.012*low and buy_line == "하단선매수":
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
@@ -2008,6 +2064,20 @@ class Kiwoom(QAxWidget):
                         self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 100% " + str(rebuy_count) + "주")
                         self.ui.textEdit.append(" ")
 
+            elif reach_two_per2 == 3:
+                if compare < sec_percent + 3 :
+                    self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
+                    self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
+                    self.ui.textEdit.setFontPointSize(13)
+                    self.ui.textEdit.setTextColor(QColor(0,0,255))
+                    self.ui.textEdit.append("매도 ■ : 3% 익절구간 하락")
+                    self.ui.textEdit.setFontPointSize(9)
+                    self.ui.textEdit.setTextColor(QColor(0,0,0))
+                    self.ui.textEdit.append("->시간 : " + str(time) + " | " + "2매도 | "+ name + " | 상단선 도달")
+                    self.ui.textEdit.append("매도가격 :" + format_price + " 원 " + str(compare)   + " 매도수량 : 50% " + str(rebuy_count) + "주")
+                    self.ui.textEdit.append(" ")
+                
             
             
             #매도 조건 만들기
@@ -2048,7 +2118,11 @@ class Kiwoom(QAxWidget):
                         self.ui.textEdit_2.append("3%익절구간 도달 대기중 | 종목 : " + name + " " + str(compare))
                         
                         
-                elif sell_status_1 == "3도달상태":
+                elif sell_status_1 == "3도달상태":                    
+                    if compare > sec_percent + 3 and reach_two_per2 == 2 :
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
+
+
                     if compare >= sec_percent + 7 :
                         self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count ,  0 ,"03", "" )
                         self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
@@ -2069,7 +2143,7 @@ class Kiwoom(QAxWidget):
                     else: 
                         self.ui.textEdit_2.append("7%익절구간 도달 대기중 | 종목 : " + name + " " + str( compare))
                         
-                 elif sell_status_1 == "50익절상태":
+                elif sell_status_1 == "50익절상태":
                     #하단선 밑 1.2%
                     if price <= low - 0.004*low and buy_line == "하단선매수":
                             self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
@@ -2154,7 +2228,7 @@ class Kiwoom(QAxWidget):
                     else: 
                         self.ui.textEdit_2.append("7%익절구간 도달 상태| 종목 : " + name + " " + str(compare))
                         
-                 elif sell_status_1 == "50익절상태":
+                elif sell_status_1 == "50익절상태":
                     #하단선 밑 1.2%
                     if price <= low - 0.004*low and buy_line == "하단선매수":
                             self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, rebuy_count,  0 ,"03", "" )
