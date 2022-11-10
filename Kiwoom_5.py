@@ -676,7 +676,8 @@ class Kiwoom(QAxWidget):
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 0
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                     self.ui.textEdit.setFontPointSize(13)
                     self.ui.textEdit.setTextColor(QColor(0,0,255))
                     self.ui.textEdit.append("매도 ■ : 매수가 매도(하단선)")
@@ -692,7 +693,8 @@ class Kiwoom(QAxWidget):
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 0
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                     self.ui.textEdit.setFontPointSize(13)
                     self.ui.textEdit.setTextColor(QColor(0,0,255))
                     self.ui.textEdit.append("매도 ■ : 매수가 매도(중단선)")
@@ -709,7 +711,8 @@ class Kiwoom(QAxWidget):
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 0
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                     self.ui.textEdit.setFontPointSize(13)
                     self.ui.textEdit.setTextColor(QColor(0,0,255))
                     self.ui.textEdit.append("매도 ■ : 매수가 매도(상단선)")
@@ -724,7 +727,7 @@ class Kiwoom(QAxWidget):
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
                     self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
-                    self.dic[list_1[list_1.index(name+'_reach_two_per')]] = 3
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                     self.ui.textEdit.setFontPointSize(13)
                     self.ui.textEdit.setTextColor(QColor(0,0,255))
                     self.ui.textEdit.append("매도 ■ : 3% 익절구간 하락")
@@ -982,13 +985,13 @@ class Kiwoom(QAxWidget):
             #현재가가 각 라인에 도달하면 매수
             
             #하단선 밑일 때 하단선 돌파시 매수
-            if price < low :
+            if price < low + low*0.008 :
                 self.dic[list_1[list_1.index(name+'_line_status')]]  = "하단선밑"
             #현재가 중단선, 하단선 사이일 때 중단선 돌파시 매수
-            elif  price > low and price < middle :
+            elif  price > low + low*0.008 and price < middle + middle*0.008  :
                 self.dic[list_1[list_1.index(name+'_line_status')]]  = "중단선밑"
             #현재가 상단선, 중단선 사이일 때 상단선 돌파시 매수
-            elif  price > middle and price < high :
+            elif  price > middle + middle*0.008  and price < high + high*0.008 :
                 self.dic[list_1[list_1.index(name+'_line_status')]]  = "상단선밑"
             
             #현재가 상단선 위일 경우 대기
@@ -1119,6 +1122,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "50익절상태"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = rebuy_count - per_count50 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count50 *price  #남은 잔고 
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
                         self.ui.textEdit.setFontPointSize(13)
                         self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도 ■ : 매수가 매도(하단선)")
@@ -1137,6 +1141,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "50익절상태"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = rebuy_count - per_count50 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count50 *price  #남은 잔고 
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
                         self.ui.textEdit.setFontPointSize(13)
                         self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도 ■ : 매수가 매도(중단선)")
@@ -1154,6 +1159,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "50익절상태"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = rebuy_count - per_count50 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count50 *price  #남은 잔고 
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
                         self.ui.textEdit.setFontPointSize(13)
                         self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도 ■ : 매수가 매도(상단선)")
@@ -1693,7 +1699,7 @@ class Kiwoom(QAxWidget):
             elif reach_two_per == 3 :
                 if compare < sec_percent + 3:
                     self.send_order('send_order', "0101", self.ui.account_number, 2, trcode, buy_count,  0 ,"03", "" )
-                    self.dic[list_1[list_1.index(name+'_status')]] = "재매수대기상태"
+                    self.dic[list_1[list_1.index(name+'_status')]] = "거래끝"
                     self.dic[list_1[list_1.index(name+'_sell_price')]] = price * buy_count
                     self.dic[list_1[list_1.index(name+'_buy_line')]] = ""
                     self.dic[list_1[list_1.index(name+'_sell_status1')]] = "초기상태"
@@ -1924,15 +1930,15 @@ class Kiwoom(QAxWidget):
             
             
             #하단선 밑일 때 하단선 돌파시 매수
-            if price < low :
+            if price < low + low*0.008 :
                 self.dic[list_1[list_1.index(name+'_line_status')]]  = "하단선밑"
 
             #현재가 상단선, 히단선 사이일 때 상단선 돌파시 매수
-            elif  price > low and price < high :
+            elif  price > low + low*0.008 and price < high + high*0.008 :
                 self.dic[list_1[list_1.index(name+'_line_status')]]  = "상단선밑"
                 
             #현재가 상단선 위일 경우 대기
-            elif  price > high :
+            elif  price > high + high*0.008 :
                 self.ui.textEdit_2.append("현재가 종목 상단선 위(2매수대기상태) | 종목 : " + name + " | 현재가 :" + format_price)
               
             #하단선 밑일 때 하단선 돌파시 매수
@@ -2027,6 +2033,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "50익절상태"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = rebuy_count - per_count50 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count50 *price  #남은 잔고 
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
                         self.ui.textEdit.setFontPointSize(13)
                         self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도 ■ : 매수가 매도(하단선)")
@@ -2044,6 +2051,7 @@ class Kiwoom(QAxWidget):
                         self.dic[list_1[list_1.index(name+'_sell_status1')]] = "50익절상태"
                         self.dic[list_1[list_1.index(name+'_rebuy_count')]] = rebuy_count - per_count50 #남은 수량
                         self.dic[list_1[list_1.index(name+'_sell_price')]] +=  per_count50 *price  #남은 잔고 
+                        self.dic[list_1[list_1.index(name+'_reach_two_per2')]] = 3
                         self.ui.textEdit.setFontPointSize(13)
                         self.ui.textEdit.setTextColor(QColor(0,0,255))
                         self.ui.textEdit.append("매도 ■ : 매수가 매도(상단선)")
